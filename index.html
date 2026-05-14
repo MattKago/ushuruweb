@@ -145,19 +145,12 @@ p  { margin: 0; color: var(--fg-2); }
   border-bottom: 1px solid var(--line);
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-.brand { display: inline-flex; align-items: center; gap: 9px; font-size: 19px; font-weight: 500; letter-spacing: -0.01em; }
-.brand .mark {
-  width: 24px; height: 24px; border-radius: 6px;
-  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
-  display: inline-flex; align-items: center; justify-content: center;
-  position: relative;
-}
-.brand .mark::after {
-  content: ''; position: absolute; inset: 5px; border: 1.5px dashed rgba(255,255,255,0.55); border-radius: 3px;
-}
-.brand .mark::before {
-  content: ''; position: absolute; right: 3px; bottom: 3px; width: 7px; height: 7px; border-radius: 999px; background: var(--lime);
-}
+.brand { display: inline-flex; align-items: center; font-size: 0; line-height: 0; }
+.brand img { height: 28px; width: auto; display: block; }
+.brand .logo-light { display: none; }
+.brand .logo-dark { display: block; }
+:root[data-theme="light"] .brand .logo-light { display: block; }
+:root[data-theme="light"] .brand .logo-dark { display: none; }
 .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--fg-2); }
 .nav-links a:hover { color: var(--fg); }
 @media (max-width: 880px) { .nav-links { display: none; } }
@@ -786,7 +779,7 @@ footer { padding: 72px 0 36px; background: var(--bg); border-top: 1px solid var(
 <!-- ============================ NAV ============================ -->
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="#"><span class="mark"></span>Ushuru&thinsp;Flow</a>
+    <a class="brand" href="#"><img class="logo-dark" src="assets/logo-dark.png" alt="Ushuru Flow" /><img class="logo-light" src="assets/logo-light.png" alt="Ushuru Flow" /></a>
     <nav class="nav-links">
       <a href="#available">Available now</a>
       <a href="#tools">KRA Tools</a>
@@ -1287,7 +1280,7 @@ footer { padding: 72px 0 36px; background: var(--bg); border-top: 1px solid var(
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="brand" href="#"><span class="mark"></span>Ushuru&thinsp;Flow</a>
+        <a class="brand" href="#"><img class="logo-dark" src="assets/logo-dark.png" alt="Ushuru Flow" /><img class="logo-light" src="assets/logo-light.png" alt="Ushuru Flow" /></a>
         <p>VAT3 in minutes, not days. With every figure traceable to its source.</p>
         <p style="margin-top:10px;">For questions reach out to: <a href="mailto:matthewphilkan@gmail.com" style="color:var(--violet-2); border-bottom:1px solid currentColor;">matthewphilkan@gmail.com</a></p>
       </div>

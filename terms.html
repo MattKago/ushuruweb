@@ -40,13 +40,12 @@ a:hover { color: var(--violet); }
 /* NAV */
 .nav { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-.brand { display: inline-flex; align-items: center; gap: 9px; font-size: 19px; font-weight: 500; letter-spacing: -0.01em; color: var(--fg); text-decoration: none; }
-.brand .mark {
-  width: 24px; height: 24px; border-radius: 6px; position: relative;
-  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
-}
-.brand .mark::after { content: ''; position: absolute; inset: 5px; border: 1.5px dashed rgba(255,255,255,0.55); border-radius: 3px; }
-.brand .mark::before { content: ''; position: absolute; right: 3px; bottom: 3px; width: 7px; height: 7px; border-radius: 999px; background: var(--lime); }
+.brand { display: inline-flex; align-items: center; text-decoration: none; font-size: 0; line-height: 0; }
+.brand img { height: 28px; width: auto; display: block; }
+.brand .logo-light { display: none; }
+.brand .logo-dark { display: block; }
+:root[data-theme="light"] .brand .logo-light { display: block; }
+:root[data-theme="light"] .brand .logo-dark { display: none; }
 .nav-right { display: flex; gap: 12px; align-items: center; }
 .back-link { font-size: 13px; color: var(--fg-2); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
 .back-link:hover { color: var(--fg); }
@@ -195,7 +194,7 @@ footer { padding: 32px 0; border-top: 1px solid var(--line); background: var(--b
 
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="index.html"><span class="mark"></span>Ushuru&thinsp;Flow</a>
+    <a class="brand" href="index.html"><img class="logo-dark" src="assets/logo-dark.png" alt="Ushuru Flow" /><img class="logo-light" src="assets/logo-light.png" alt="Ushuru Flow" /></a>
     <div class="nav-right">
       <a class="back-link" href="index.html">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>

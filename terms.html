@@ -90,10 +90,10 @@ a:hover { color: var(--violet); }
 /* ARTICLE LAYOUT */
 .article {
   display: grid; grid-template-columns: 220px 1fr; gap: 56px;
-  padding: 56px 0 80px;
+  padding-top: 56px; padding-bottom: 80px;
 }
 @media (max-width: 920px) {
-  .article { grid-template-columns: 1fr; gap: 32px; padding: 40px 0 64px; }
+  .article { grid-template-columns: 1fr; gap: 32px; padding-top: 40px; padding-bottom: 64px; }
   .toc { position: static !important; }
 }
 

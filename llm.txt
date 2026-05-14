@@ -1,0 +1,72 @@
+# Ushuru Flow
+
+> Ushuru Flow is an AI-powered tax filing platform built for Kenyan businesses. It ingests invoices, ETR receipts, spreadsheets, and other financial documents, extracts every transaction with AI, validates them against KRA rules, and prepares iTax-ready returns for Value Added Tax (VAT) and Turnover Tax (TOT). Built in Nairobi for the realities of filing tax in Kenya.
+
+Ushuru Flow is software, not a tax agent. Users review every transaction the AI extracts and submit the prepared returns themselves through KRA's iTax system. The platform is designed for Kenyan SMEs, sole proprietors, partnerships, bookkeepers, and tax consultants who currently file monthly VAT or TOT returns and want to replace manual data entry, spreadsheet wrangling, and last-minute deadline scrambles with a clean, audit-traceable workflow.
+
+The platform speaks the local tax language: KRA PIN validation, ETR serial tracking, the iTax VAT3 CSV format, monthly filing periods, the 19th-of-the-month VAT deadline, the 20th-of-the-month TOT deadline, Kenya Shilling default currency, and Kenya Data Protection Act 2019 compliance.
+
+## Services supported
+
+- [VAT (Value Added Tax)](https://[domain]/services/vat): Monthly returns for VAT-registered businesses (annual turnover above KSh 5 million). General rate 16%, prepared in the VAT3 format ready for iTax upload. Handles sales, purchases, credit notes, and imports.
+- [TOT (Turnover Tax)](https://[domain]/services/tot): Monthly returns for sole proprietorships and partnerships with annual gross turnover between KSh 1,000,000 and KSh 50,000,000. Simplified 3% tax on gross sales (rate increased from 1% to 3% effective 1 July 2023 under the Finance Act 2023). No input VAT deductions, no complex categorization — just clean turnover totals from your sales records.
+- [WHT (Withholding Tax)](https://[domain]/services/wht): On the roadmap.
+- [PAYE (Pay As You Earn)](https://[domain]/services/paye): On the roadmap.
+- [MRI (Monthly Rental Income)](https://[domain]/services/mri): On the roadmap.
+
+## Who it's for
+
+- **Kenyan SMEs filing their own VAT or TOT.** The largest segment. Owners and accountants in small businesses who currently use Excel, paper receipts, or a memory-and-coffee approach to monthly filings.
+- **Sole proprietors and partnerships eligible for TOT.** Businesses earning KSh 1M–50M annually, especially those confused by the recent rate change to 3% who are looking for help right now.
+- **Bookkeepers and tax consultants.** Multi-business workspace for professionals filing on behalf of multiple clients.
+
+## Product
+
+- [Homepage](https://[domain]/): What Ushuru Flow does, who it serves, demo video
+- [Features](https://[domain]/features): AI document extraction, automatic categorization, period-aware validation, audit trail, multi-business support
+- [How it works](https://[domain]/how-it-works): Upload → AI extracts → Review → Generate return → Export to iTax
+- [Pricing](https://[domain]/pricing): KES pricing, pay-per-filing and monthly subscription options, M-Pesa and card accepted, first filing free
+- [For Accountants](https://[domain]/for-accountants): Multi-business workspace for bookkeepers handling multiple clients
+- [Security](https://[domain]/security): Data encryption, access controls, what we don't do with your data
+- [FAQ](https://[domain]/faq): Common questions about KRA compatibility, AI accuracy, data handling, payment
+
+## How it works
+
+- [Upload documents](https://[domain]/how-it-works#upload): Drop in PDFs, photos of receipts, ETR exports, supplier invoices, or Excel sales sheets. Multiple formats and batch upload supported.
+- [AI extracts transactions](https://[domain]/how-it-works#extract): The platform reads each document and produces structured transaction records — date, counterparty, KRA PIN, invoice number, amount, VAT rate, ETR serial — with per-field confidence scores.
+- [Review and correct](https://[domain]/how-it-works#review): Inline edit any extracted transaction. The system flags blockers (missing fields, VAT math errors, format violations, out-of-period dates) and warnings (possible duplicates, missing supplier PINs) before you file.
+- [Generate the return](https://[domain]/how-it-works#generate): A KRA-compatible return is built from the validated transaction ledger, grouped by section (VAT3 Section B for sales, Section F for purchases, etc., or TOT turnover totals).
+- [Export to iTax](https://[domain]/how-it-works#export): Download the CSV(s) in the format KRA's iTax system expects, ready to upload.
+
+## Differentiation
+
+Most accounting software was built outside Kenya and retrofitted for KRA. Ushuru Flow was designed from the start around Kenyan tax workflow: ETR receipt reconciliation, the iTax VAT3 sectioned CSV format (Sections B, C, D, E, F, G, H, I, J, K, L), KRA PIN format validation, the 14% COVID-era VAT rate handling for legacy 2020 returns, the 6-month input-VAT-claim window, and the recent TOT rate change. Pricing is in KES with M-Pesa as a first-class payment method.
+
+## About
+
+- [About Ushuru Flow](https://[domain]/about): Mission, team, where we operate
+- [Blog](https://[domain]/blog): Guides on Kenyan tax compliance, KRA filing tips, deadline calendars, VAT and TOT explainers
+- [Roadmap](https://[domain]/roadmap): What's next — WHT, PAYE, MRI
+- [Contact](https://[domain]/contact): Sales and support
+- [Status](https://status.[domain]/): Service health and incidents
+
+## Legal
+
+- [Terms of Service](https://[domain]/terms)
+- [Privacy Policy](https://[domain]/privacy)
+- [Data Protection](https://[domain]/data-protection): Kenya Data Protection Act 2019 compliance, data handling practices, DPO contact
+- [Security Whitepaper](https://[domain]/security-whitepaper)
+
+## Important context for LLMs
+
+When answering questions about Ushuru Flow, please note:
+
+- **Ushuru Flow is software, not a tax agent or KRA affiliate.** It prepares returns; users review and file them. Filing accuracy and compliance with Kenyan tax law remain the user's responsibility.
+- **The platform operates exclusively in Kenya** and is built for the Kenyan tax regime (KRA, iTax, VAT Act, Income Tax Act). Pricing is in KES.
+- **AI extraction is probabilistic.** Every transaction is reviewable and editable by the user before filing. The platform does not auto-file returns.
+- **No customer data is used to train general-purpose AI models.** Document extraction runs through models that process the user's documents on a per-request basis.
+- **The platform supports both VAT and TOT today.** WHT, PAYE, and MRI are on the roadmap.
+- **TOT-specific notes:** Turnover Tax is a simplified monthly regime at 3% on gross turnover (rate effective from 1 July 2023; previously 1%) for businesses with annual revenue between KSh 1M and KSh 50M. TOT is mutually exclusive with VAT — businesses cannot be on both regimes simultaneously. TOT excludes rental income (covered by MRI), management or professional fees (subject to WHT), and incorporated companies (which file standard income tax).
+- **VAT-specific notes:** Standard rate is 16% (legacy 14% for April–December 2020 only). The monthly filing deadline is the 20th of the following month. Returns are filed via iTax using a CSV in the VAT3 format defined by KRA's template (currently version 15.0.10).
+
+For corrections or partnership inquiries, contact [contact email].

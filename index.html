@@ -1,0 +1,1423 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ushuru Flow — File your VAT3 in minutes, not days</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* =============================================================================
+   TOKENS
+   ============================================================================= */
+:root[data-theme="dark"] {
+  --bg:           #0B0B10;
+  --bg-2:         #0F0F17;
+  --bg-3:         #15151F;
+  --surface:      #1A1A26;
+  --surface-2:    #20202E;
+  --line:         rgba(255,255,255,0.08);
+  --line-strong:  rgba(255,255,255,0.16);
+
+  --fg:           #F2F0EA;
+  --fg-2:         #B6B2A6;
+  --fg-3:         #807C72;
+  --fg-4:         #5A5750;
+
+  --violet:       #8B7FFF;
+  --violet-2:     #A99FFF;
+  --violet-deep:  #4F3FE0;
+  --violet-wash:  rgba(139,127,255,0.14);
+
+  --lime:         #E8FF5C;
+  --pink:         #FF6BD6;
+  --orange:       #FFA452;
+
+  --hero-grad:
+    radial-gradient(ellipse 1100px 600px at 80% -10%, rgba(120,80,255,0.35), transparent 60%),
+    radial-gradient(ellipse 700px 400px at 0% 0%, rgba(40,90,180,0.18), transparent 55%),
+    linear-gradient(180deg, #15131F 0%, #0B0B10 100%);
+
+  --strip-grad:
+    linear-gradient(105deg,
+      #6B4FE0 0%,
+      #B055D8 24%,
+      #E94CB8 46%,
+      #FF7A52 72%,
+      #FFB541 100%);
+
+  --grid-line: rgba(255,255,255,0.04);
+}
+
+:root[data-theme="light"] {
+  --bg:           #FFFFFF;
+  --bg-2:         #FAF9F6;
+  --bg-3:         #F2F0EA;
+  --surface:      #FFFFFF;
+  --surface-2:    #F7F5F0;
+  --line:         rgba(15,15,20,0.10);
+  --line-strong:  rgba(15,15,20,0.20);
+
+  --fg:           #0E0E14;
+  --fg-2:         #3D3B36;
+  --fg-3:         #6B6862;
+  --fg-4:         #98948B;
+
+  --violet:       #5A4AE6;
+  --violet-2:     #4338C9;
+  --violet-deep:  #3328A8;
+  --violet-wash:  rgba(90,74,230,0.10);
+
+  --lime:         #C8E83D;
+  --pink:         #E94CB8;
+  --orange:       #FF7A52;
+
+  --hero-grad:
+    radial-gradient(ellipse 1100px 600px at 80% -10%, rgba(140,110,255,0.18), transparent 60%),
+    radial-gradient(ellipse 700px 400px at 0% 0%, rgba(50,100,200,0.08), transparent 55%),
+    linear-gradient(180deg, #FAF9F6 0%, #FFFFFF 100%);
+
+  --strip-grad:
+    linear-gradient(105deg,
+      #6B4FE0 0%,
+      #B055D8 24%,
+      #E94CB8 46%,
+      #FF7A52 72%,
+      #FFB541 100%);
+
+  --grid-line: rgba(15,15,20,0.05);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; text-decoration: none; }
+.mono { font-family: 'Geist Mono', 'Menlo', monospace; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+@media (max-width: 720px) { .wrap { padding: 0 20px; } }
+
+h1, h2, h3, h4 {
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--fg);
+}
+h1 { font-size: clamp(48px, 6vw, 76px); line-height: 1.04; }
+h2 { font-size: clamp(36px, 4.4vw, 56px); line-height: 1.06; }
+h3 { font-size: clamp(22px, 2vw, 28px); line-height: 1.15; font-weight: 400; }
+h4 { font-size: 17px; font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; }
+p  { margin: 0; color: var(--fg-2); }
+
+/* =============================================================================
+   ANNOUNCEMENT BAR (yellow)
+   ============================================================================= */
+.bar {
+  background: var(--lime);
+  color: #0B0B10;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 9px 0;
+}
+.bar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.bar a { text-decoration: underline; text-underline-offset: 3px; }
+.bar .right { display: flex; gap: 22px; }
+.bar .right a:hover { opacity: 0.7; }
+@media (max-width: 720px) { .bar .right { display: none; } }
+
+/* =============================================================================
+   NAV
+   ============================================================================= */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-size: 19px; font-weight: 500; letter-spacing: -0.01em; }
+.brand .mark {
+  width: 24px; height: 24px; border-radius: 6px;
+  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
+  display: inline-flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.brand .mark::after {
+  content: ''; position: absolute; inset: 5px; border: 1.5px dashed rgba(255,255,255,0.55); border-radius: 3px;
+}
+.brand .mark::before {
+  content: ''; position: absolute; right: 3px; bottom: 3px; width: 7px; height: 7px; border-radius: 999px; background: var(--lime);
+}
+.nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--fg-2); }
+.nav-links a:hover { color: var(--fg); }
+@media (max-width: 880px) { .nav-links { display: none; } }
+.nav-right { display: flex; gap: 8px; align-items: center; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: inherit; font-size: 14px; font-weight: 500;
+  padding: 9px 16px; border-radius: 6px;
+  border: 1px solid transparent; cursor: pointer; text-decoration: none;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 80ms ease;
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn-violet { background: var(--violet-wash); color: var(--violet-2); border-color: var(--violet); }
+.btn-violet:hover { background: var(--violet); color: #fff; }
+.btn-dark { background: var(--bg-3); color: var(--fg); border-color: var(--line-strong); }
+.btn-dark:hover { background: var(--surface-2); }
+.btn-ghost { color: var(--fg-2); }
+.btn-ghost:hover { color: var(--fg); }
+.btn-lg { padding: 13px 22px; font-size: 15px; }
+.btn-light { background: var(--fg); color: var(--bg); }
+.btn-light:hover { opacity: 0.92; }
+
+/* Theme toggle */
+.theme-toggle {
+  width: 32px; height: 32px; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: transparent; color: var(--fg-2);
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.theme-toggle:hover { color: var(--fg); border-color: var(--fg-2); }
+.theme-toggle svg { width: 14px; height: 14px; }
+.theme-toggle .ico-light { display: none; }
+:root[data-theme="dark"] .theme-toggle .ico-dark { display: none; }
+:root[data-theme="dark"] .theme-toggle .ico-light { display: block; }
+
+/* =============================================================================
+   HERO
+   ============================================================================= */
+.hero {
+  position: relative; overflow: hidden;
+  background: var(--hero-grad);
+  border-bottom: 1px solid var(--line);
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: -1px -1px;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 25%, #000 70%, transparent 100%);
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px;
+  padding: 84px 0 96px; align-items: center;
+}
+@media (max-width: 1000px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; padding: 56px 0 64px; }
+}
+.hero h1 { font-weight: 300; letter-spacing: -0.025em; }
+.hero p.sub {
+  margin-top: 24px; max-width: 480px;
+  font-size: 17px; line-height: 1.55; color: var(--fg-2);
+}
+.hero-ctas { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Code window */
+.code-win {
+  border: 1px solid var(--line-strong); border-radius: 10px;
+  background: linear-gradient(180deg, #1B1830 0%, #0F0E1A 100%);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(139,127,255,0.18);
+  overflow: hidden;
+}
+:root[data-theme="light"] .code-win {
+  background: linear-gradient(180deg, #1B1830 0%, #0F0E1A 100%);
+}
+.code-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.lights { display: flex; gap: 7px; }
+.lights span { width: 11px; height: 11px; border-radius: 999px; }
+.lights .r { background: #FF5F57; }
+.lights .y { background: #FEBC2E; }
+.lights .g { background: #28C840; }
+.copy-btn { color: rgba(255,255,255,0.4); font-size: 12px; }
+.code-body {
+  padding: 20px 22px; font-family: 'Geist Mono', monospace; font-size: 13px;
+  line-height: 1.7; color: #E8E5F8;
+}
+.code-body .com  { color: #7C7596; }
+.code-body .key  { color: #C792EA; }
+.code-body .fn   { color: #82AAFF; }
+.code-body .str  { color: #C3E88D; }
+.code-body .num  { color: #F78C6C; }
+.code-body .var  { color: #FFCB6B; }
+.code-body .me   { color: #FF6BD6; }
+.code-tabs {
+  display: flex; gap: 18px; padding: 10px 22px 14px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.4);
+}
+.code-tabs .on { color: var(--lime); border-bottom: 1.5px solid var(--lime); padding-bottom: 2px; }
+
+/* =============================================================================
+   LOGO STRIP
+   ============================================================================= */
+.logos {
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+.logos-inner {
+  display: flex; gap: 56px; align-items: center; justify-content: space-between;
+  padding: 26px 0; overflow: hidden;
+}
+.logos-inner span {
+  font-family: 'Geist Mono', monospace; font-size: 13px;
+  color: var(--fg-3); letter-spacing: 0.02em; white-space: nowrap;
+  opacity: 0.7;
+}
+.logos-inner span.bold { font-weight: 500; opacity: 1; color: var(--fg-2); letter-spacing: -0.01em; font-family: 'Geist', sans-serif; }
+@media (max-width: 920px) { .logos-inner { gap: 28px; flex-wrap: wrap; justify-content: center; } }
+
+/* =============================================================================
+   GRADIENT STRIP (Replay-style)
+   ============================================================================= */
+.strip {
+  background: var(--strip-grad);
+  position: relative; overflow: hidden;
+}
+.strip::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+.strip-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px;
+  padding: 80px 0; align-items: center;
+}
+@media (max-width: 880px) { .strip-inner { grid-template-columns: 1fr; padding: 56px 0; } }
+.strip .eyebrow {
+  font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.85);
+  margin-bottom: 18px;
+}
+.strip h2 { color: #fff; font-weight: 300; }
+.strip p { color: rgba(255,255,255,0.85); font-size: 16px; max-width: 460px; margin-top: 18px; }
+.strip .btn-dark { background: #0B0B10; color: #fff; border-color: #0B0B10; margin-top: 28px; }
+.strip .btn-dark:hover { background: #15151F; }
+
+.strip-art {
+  position: relative; aspect-ratio: 4/3; max-width: 520px; justify-self: end;
+  border-radius: 10px; overflow: hidden;
+  background: linear-gradient(135deg, #C8E83D 0%, #88AA1F 100%);
+  border: 4px solid rgba(255,255,255,0.4);
+}
+.strip-art .face {
+  position: absolute; right: 10%; top: 12%; width: 70%; height: 76%;
+  border-radius: 8px;
+  background:
+    radial-gradient(ellipse at 30% 35%, #4A2A1A 0%, #2B1A12 40%, #1A0F09 100%);
+}
+.strip-art .face::after {
+  content: ''; position: absolute; left: 18%; top: 22%; width: 14px; height: 14px;
+  border-radius: 999px; background: #FFD7BE;
+  box-shadow:
+    50px 8px 0 -1px #FFD7BE,
+    25px 60px 0 #C68662;
+}
+.strip-art .panel {
+  position: absolute; left: 4%; bottom: 8%; width: 38%; height: 34%;
+  background: linear-gradient(135deg, rgba(0,0,0,0.5), rgba(0,0,0,0.2));
+  border-radius: 6px;
+  display: flex; align-items: flex-end; padding: 12px;
+  font-family: 'Geist Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.85);
+  letter-spacing: 0.04em;
+}
+
+/* =============================================================================
+   SECTION SHELL
+   ============================================================================= */
+section { border-bottom: 1px solid var(--line); }
+.sect { padding: 96px 0; }
+@media (max-width: 720px) { .sect { padding: 64px 0; } }
+.sect-head { max-width: 720px; margin-bottom: 56px; }
+.sect-head h2 { margin-bottom: 16px; }
+.sect-head p { font-size: 17px; line-height: 1.55; color: var(--fg-2); }
+
+.eyebrow {
+  font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--violet);
+  margin-bottom: 20px; display: inline-block;
+}
+
+/* =============================================================================
+   AVAILABLE NOW (KRA Tools + Ushuru AI)
+   ============================================================================= */
+.avail { background: var(--bg-2); }
+.avail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 920px) { .avail-grid { grid-template-columns: 1fr; } }
+.acard {
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 28px; display: flex; flex-direction: column; gap: 18px;
+  position: relative; overflow: hidden;
+}
+.acard::before {
+  content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--violet) 0%, var(--pink) 100%);
+}
+.acard .ahead { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.acard .ic {
+  width: 40px; height: 40px; border-radius: 8px; background: var(--violet-wash);
+  color: var(--violet-2); display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.acard .ic svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.acard h3 { color: var(--fg); margin-bottom: 6px; }
+.live-tag {
+  font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--lime); padding: 4px 9px;
+  border: 1px solid color-mix(in srgb, var(--lime) 35%, transparent); border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; align-self: flex-start;
+  background: color-mix(in srgb, var(--lime) 8%, transparent);
+}
+:root[data-theme="light"] .live-tag { color: #5a7a00; }
+.live-tag::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: var(--lime); }
+
+.tool-list {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+}
+.tool-list .ti {
+  background: var(--surface); padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--fg-2);
+  transition: background 120ms ease, color 120ms ease;
+}
+.tool-list .ti:hover { background: var(--surface-2); color: var(--violet-2); }
+.tool-list .ti svg { width: 13px; height: 13px; flex-shrink: 0; color: var(--fg-4); stroke: currentColor; fill: none; stroke-width: 2; }
+.tool-list .ti:hover svg { color: var(--violet); }
+.tool-list .ti .arr { margin-left: auto; color: var(--fg-4); }
+@media (max-width: 540px) { .tool-list { grid-template-columns: 1fr; } }
+
+.ai-chat {
+  background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px;
+  padding: 16px; display: flex; flex-direction: column; gap: 12px;
+  font-size: 13.5px; line-height: 1.5;
+}
+.ai-msg { display: flex; gap: 10px; align-items: flex-start; }
+.ai-msg .who {
+  font-family: 'Geist Mono', monospace; font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--fg-4); flex-shrink: 0; width: 30px; padding-top: 3px;
+}
+.ai-msg .body { color: var(--fg); flex: 1; }
+.ai-msg.user .body { color: var(--fg-2); font-style: italic; }
+.cite {
+  display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-style: normal;
+  color: var(--violet-2); background: var(--violet-wash);
+  padding: 2px 7px; border-radius: 4px; margin-left: 6px;
+  font-family: 'Geist Mono', monospace; letter-spacing: 0.02em;
+}
+.ai-input {
+  display: flex; align-items: center; gap: 8px;
+  border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 4px;
+  color: var(--fg-4); font-size: 12px;
+}
+.ai-input .blink { width: 1.5px; height: 12px; background: var(--violet); animation: bl 1s steps(2) infinite; }
+@keyframes bl { 50% { opacity: 0; } }
+
+.acard .acta { margin-top: auto; padding-top: 6px; display: flex; gap: 10px; align-items: center; }
+.acard .meta { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--fg-3); margin-left: auto; letter-spacing: 0.04em; }
+
+/* =============================================================================
+   PLATFORM PREVIEW BANNER
+   ============================================================================= */
+.preview-row {
+  margin-top: 32px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  border: 1px dashed var(--line-strong); border-radius: 10px; padding: 18px 22px;
+}
+.preview-row .tag {
+  font-family: 'Geist Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--orange); border: 1px solid color-mix(in srgb, var(--orange) 30%, transparent);
+  padding: 5px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--orange) 8%, transparent);
+}
+.preview-row .txt { color: var(--fg-2); font-size: 14px; flex: 1; min-width: 240px; }
+.preview-row .txt b { color: var(--fg); font-weight: 500; }
+.preview-row a { color: var(--violet-2); font-size: 13px; border-bottom: 1px solid currentColor; }
+
+/* Coming soon roadmap cards */
+.roadmap {
+  margin-top: 56px;
+}
+.roadmap-head {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  margin-bottom: 24px; flex-wrap: wrap;
+}
+.roadmap-head h3 {
+  font-weight: 300; font-size: clamp(24px, 2.6vw, 34px);
+  letter-spacing: -0.02em; line-height: 1.1;
+}
+.roadmap-head h3 .accent { color: var(--orange); }
+.roadmap-head .right {
+  font-family: 'Geist Mono', monospace; font-size: 12px;
+  color: var(--fg-3); display: inline-flex; align-items: center; gap: 8px;
+}
+.roadmap-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+@media (max-width: 960px) { .roadmap-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .roadmap-grid { grid-template-columns: 1fr; } }
+.rcard {
+  position: relative;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 22px 22px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  overflow: hidden;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+.rcard:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+.rcard::before {
+  content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--orange) 100%);
+  opacity: 0.6;
+}
+.rcard .rhead {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+}
+.rcard .ric {
+  width: 32px; height: 32px; border-radius: 7px; background: var(--bg-3);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--orange);
+}
+.rcard .ric svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.rcard .eta {
+  font-family: 'Geist Mono', monospace; font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--orange);
+  padding: 4px 8px; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--orange) 30%, transparent);
+  background: color-mix(in srgb, var(--orange) 8%, transparent);
+  white-space: nowrap; flex-shrink: 0;
+}
+.rcard h4 { color: var(--fg); font-weight: 500; font-size: 17px; letter-spacing: -0.01em; }
+.rcard .kicker {
+  font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--fg-3); margin-bottom: 2px;
+}
+.rcard p {
+  font-size: 13px; line-height: 1.55; color: var(--fg-3);
+}
+.rcard .stat {
+  margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line);
+  font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--fg-3);
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+}
+.rcard .stat b { color: var(--fg); font-weight: 500; }
+.rcard .waitlink {
+  font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--violet-2);
+  text-decoration: none; letter-spacing: 0.04em;
+}
+.rcard .waitlink:hover { color: var(--violet); }
+
+/* =============================================================================
+   PROBLEM (Replace your brittle…)
+   ============================================================================= */
+.problem .row {
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: flex-start;
+  padding: 64px 0;
+}
+.problem .row + .row { border-top: 1px solid var(--line); }
+@media (max-width: 880px) { .problem .row { grid-template-columns: 1fr; gap: 32px; padding: 48px 0; } }
+.problem h3 { font-weight: 300; font-size: clamp(28px, 3vw, 40px); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 18px; }
+.problem p + p { margin-top: 14px; }
+.problem a.link { color: var(--violet-2); border-bottom: 1px solid currentColor; }
+
+.diagram {
+  background: var(--bg-3); border: 1px solid var(--line); border-radius: 10px;
+  padding: 28px; display: flex; align-items: center; justify-content: center; min-height: 280px;
+}
+.diagram svg { width: 100%; height: auto; max-width: 480px; display: block; }
+
+.dash-shot {
+  background: var(--bg-3); border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px; min-height: 240px;
+}
+.dash-shot .bar {
+  display: flex; gap: 10px; padding: 0 0 12px; border-bottom: 1px solid var(--line); margin-bottom: 12px;
+  background: transparent; color: inherit;
+}
+.dash-shot .bar .lights span { width: 9px; height: 9px; }
+.dash-shot .crumb { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--fg-4); }
+.dash-shot .timeline { display: flex; flex-direction: column; gap: 6px; }
+.dash-shot .tline {
+  display: grid; grid-template-columns: 110px 1fr 60px; gap: 12px; align-items: center;
+  font-size: 11px; font-family: 'Geist Mono', monospace; color: var(--fg-3);
+}
+.dash-shot .tline .lbl { color: var(--fg-2); }
+.dash-shot .tline .track { height: 14px; border-radius: 3px; background: var(--bg-2); position: relative; overflow: hidden; }
+.dash-shot .tline .track .fill {
+  position: absolute; top: 0; bottom: 0; border-radius: 3px;
+  background: linear-gradient(90deg, var(--violet) 0%, var(--pink) 100%);
+}
+.dash-shot .tline .ms { color: var(--fg-4); text-align: right; }
+
+/* =============================================================================
+   USE CASES GRID
+   ============================================================================= */
+.cases { background: var(--bg-2); }
+.cases-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+}
+@media (max-width: 880px) { .cases-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .cases-grid { grid-template-columns: 1fr; } }
+.case {
+  background: var(--surface); padding: 28px 26px;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: background 120ms ease;
+}
+.case:hover { background: var(--surface-2); }
+.case .cic {
+  width: 30px; height: 30px; border-radius: 6px; background: var(--bg-3);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--violet-2); margin-bottom: 14px;
+}
+.case .cic svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.case h4 { color: var(--fg); }
+.case p { font-size: 13.5px; color: var(--fg-3); line-height: 1.5; }
+
+/* =============================================================================
+   CUSTOMERS (video cards)
+   ============================================================================= */
+.customers { padding: 96px 0 72px; }
+.video-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px;
+}
+@media (max-width: 980px) { .video-row { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .video-row { grid-template-columns: 1fr; } }
+.vcard {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+.vcard:hover { transform: translateY(-2px); border-color: var(--line-strong); }
+.vthumb {
+  aspect-ratio: 16/10; position: relative;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.vthumb.t1 { background: linear-gradient(135deg, #4A2C7A 0%, #2B1547 50%, #6E1B5A 100%); }
+.vthumb.t2 { background: linear-gradient(135deg, #1A2A4A 0%, #0F1B33 100%); }
+.vthumb.t3 { background: linear-gradient(135deg, #0F2D5C 0%, #1B4FA8 50%, #FFB541 130%); }
+.vthumb.t4 { background: linear-gradient(135deg, #3A2A20 0%, #1A1410 100%); }
+.vthumb::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 14px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 14px);
+  pointer-events: none;
+}
+.play {
+  width: 44px; height: 44px; border-radius: 999px;
+  background: var(--lime); color: #0B0B10;
+  display: inline-flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+}
+.play svg { width: 16px; height: 16px; fill: currentColor; }
+.vcard .vbody { padding: 18px 18px 22px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.vcard h4 { color: var(--fg); font-weight: 400; line-height: 1.3; font-size: 16px; }
+.vcard .watch {
+  font-family: 'Geist Mono', monospace; font-size: 11px;
+  color: var(--fg-2); display: inline-flex; align-items: center; gap: 6px;
+  margin-top: auto;
+}
+.vcard:hover .watch { color: var(--violet-2); }
+
+/* =============================================================================
+   QUOTES STRIP
+   ============================================================================= */
+.quotes { background: var(--strip-grad); position: relative; }
+.quotes::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.1), transparent 60%);
+  pointer-events: none;
+}
+.quotes-inner {
+  position: relative; z-index: 1;
+  padding: 80px 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+}
+@media (max-width: 880px) { .quotes-inner { grid-template-columns: 1fr; padding: 56px 0; } }
+.qcard {
+  background: #fff; color: #0B0B10; border-radius: 10px; padding: 32px 30px;
+  display: flex; flex-direction: column; gap: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+}
+.qcard .qmark { color: var(--violet); font-family: 'Geist', sans-serif; font-size: 26px; font-weight: 500; }
+.qcard p.q { font-size: 15.5px; line-height: 1.55; color: #1A1A26; }
+.qcard p.q + p.q { margin-top: 12px; }
+.qcard .footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 8px; }
+.qcard .person { display: flex; gap: 12px; align-items: center; }
+.qcard .av {
+  width: 36px; height: 36px; border-radius: 999px;
+  background: linear-gradient(135deg, #888 0%, #555 100%);
+}
+.qcard .name { font-size: 13px; font-weight: 500; color: #0B0B10; }
+.qcard .role { font-size: 11.5px; color: #6B6862; }
+.qcard .corp { font-size: 13px; font-weight: 500; color: #0B0B10; display: inline-flex; align-items: center; gap: 7px; }
+.qcard .corp .corp-mark { width: 18px; height: 18px; background: #0B0B10; clip-path: polygon(50% 10%, 95% 90%, 5% 90%); display: inline-block; }
+
+/* =============================================================================
+   OPEN SOURCE / TRUST FOOT
+   ============================================================================= */
+.os { padding: 88px 0; background: var(--bg); }
+.os-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+@media (max-width: 880px) { .os-grid { grid-template-columns: 1fr; gap: 40px; } }
+.os h2 { font-weight: 300; font-size: clamp(40px, 4.5vw, 60px); }
+.os p { margin-top: 18px; max-width: 420px; font-size: 16px; }
+.os .actions { margin-top: 28px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.os .badge-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--bg-3); border: 1px solid var(--line-strong); border-radius: 999px;
+  padding: 6px 14px; font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--fg);
+}
+.os .badge-pill svg { width: 14px; height: 14px; }
+
+.os-art {
+  position: relative; aspect-ratio: 1/1; max-width: 420px; justify-self: end;
+}
+.os-art .ring {
+  position: absolute; inset: 14%;
+  border-radius: 999px;
+  background: conic-gradient(from 220deg, var(--lime) 0deg, var(--lime) 180deg, var(--violet) 240deg, var(--pink) 300deg, var(--orange) 360deg);
+  mask: radial-gradient(circle, transparent 36%, #000 38%, #000 60%, transparent 62%);
+  -webkit-mask: radial-gradient(circle, transparent 36%, #000 38%, #000 60%, transparent 62%);
+}
+.os-art .bin {
+  position: absolute; inset: 0;
+  font-family: 'Geist Mono', monospace; font-size: 10px; color: rgba(232,255,92,0.35); line-height: 1.2;
+  white-space: pre; user-select: none;
+}
+.os-art .bin.b1 { top: 8%;  left: 8%;  }
+.os-art .bin.b2 { top: 12%; right: 8%; }
+.os-art .bin.b3 { bottom: 8%; left: 12%; }
+.os-art .bin.b4 { bottom: 14%; right: 10%; }
+.os-art .src-tag {
+  position: absolute; left: 14%; top: 14%;
+  font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #fff; background: rgba(15,15,25,0.85); padding: 5px 9px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+/* =============================================================================
+   FOOTER CTA
+   ============================================================================= */
+.footcta { background: var(--bg-2); padding: 96px 0 88px; }
+.footcta .inner { text-align: center; max-width: 720px; margin: 0 auto; }
+.footcta h2 { font-weight: 300; }
+.footcta p { margin-top: 18px; color: var(--fg-2); }
+.footcta .btns { margin-top: 32px; display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+/* =============================================================================
+   FOOTER
+   ============================================================================= */
+footer { padding: 72px 0 36px; background: var(--bg); border-top: 1px solid var(--line); }
+.foot-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 40px; }
+@media (max-width: 880px) { .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+.foot-brand p { font-size: 13.5px; color: var(--fg-3); margin-top: 16px; max-width: 280px; }
+.foot-col h5 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-3); margin-bottom: 16px; font-weight: 500; font-family: 'Geist Mono', monospace; }
+.foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.foot-col a { font-size: 13.5px; color: var(--fg-2); }
+.foot-col a:hover { color: var(--fg); }
+.foot-bottom {
+  margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--fg-3); flex-wrap: wrap; gap: 12px;
+}
+
+/* =============================================================================
+   TWEAKS
+   ============================================================================= */
+.tweaks {
+  position: fixed; right: 20px; bottom: 20px; z-index: 100;
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: 10px;
+  padding: 14px 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  font-size: 12px; min-width: 240px;
+  display: none;
+}
+.tweaks.on { display: block; }
+.tweaks h6 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-3); margin: 0 0 12px; font-weight: 500; font-family: 'Geist Mono', monospace; }
+.tweaks .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+.tweaks label { color: var(--fg-2); font-size: 12px; }
+.tweaks select { background: var(--bg-3); color: var(--fg); border: 1px solid var(--line-strong); border-radius: 5px; padding: 5px 8px; font-family: inherit; font-size: 12px; }
+.tweaks .swatches { display: flex; gap: 6px; }
+.tweaks .swatches button { width: 20px; height: 20px; border-radius: 999px; border: 1px solid var(--line-strong); cursor: pointer; padding: 0; }
+.tweaks .swatches button.on { outline: 2px solid var(--fg); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ============================ ANNOUNCE BAR ============================ -->
+<div class="bar">
+  <div class="wrap">
+    <div>KRA Tools &amp; Ushuru AI are live now — free, no signup. <a href="waitlist.html">Platform waitlist →</a></div>
+    <div class="right">
+      <a href="#about">About</a>
+      <a href="#careers">
+</a>
+      <a href="#sales">Talk to Sales</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#"><span class="mark"></span>Ushuru&thinsp;Flow</a>
+    <nav class="nav-links">
+      <a href="#available">Available now</a>
+      <a href="#tools">KRA Tools</a>
+      <a href="#ai">Ushuru AI</a>
+      <a href="#platform">Platform</a>
+      <a href="#cases">Use cases</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-toggle" id="theme-btn" title="Toggle theme">
+        <svg class="ico-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="ico-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="waitlist.html" class="btn btn-violet">Try Free</a>
+      <a href="waitlist.html" class="btn btn-dark">Log In</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <h1>What if your<br/>VAT3 just<br/>filed itself?</h1>
+      <p class="sub">Failures of paperwork happen. Ushuru Flow makes them irrelevant. KRA Tools and Ushuru AI are free today — the full filing platform is coming.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-violet btn-lg" href="waitlist.html">Get Started for Free</a>
+        <a class="btn btn-ghost btn-lg" href="waitlist.html">Ask Ushuru AI</a>
+      </div>
+    </div>
+
+    <div class="code-win" aria-label="Workflow code example">
+      <div class="code-bar">
+        <div class="lights"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+        <div class="copy-btn">⧉</div>
+      </div>
+      <div class="code-body"><span class="key">@workflow</span>.<span class="fn">defn</span>
+<span class="key">class</span> <span class="me">FileVAT3Workflow</span>:
+    <span class="com"># Drop in receipts, get a return.</span>
+    <span class="key">@workflow</span>.<span class="fn">run</span>
+    <span class="key">async def</span> <span class="fn">run</span>(self, period) <span class="key">-&gt;</span> <span class="var">VAT3</span>:
+        <span class="com"># Activities have built-in retries &amp; audit trail</span>
+        receipts = <span class="key">await</span> workflow.<span class="fn">execute_activity</span>(
+            <span class="fn">extract_receipts</span>,
+            schedule_to_close_timeout=<span class="fn">timedelta</span>(seconds=<span class="num">120</span>),
+        )
+
+        <span class="com"># Reconcile against ETR &amp; KRA PIN registry</span>
+        return <span class="key">await</span> workflow.<span class="fn">execute_activity</span>(
+            <span class="fn">build_vat3</span>, receipts, period,
+        )</div>
+      <div class="code-tabs">
+        <span class="on">VAT3</span><span>WHT</span><span>PAYE</span><span>ETR</span><span>MRI</span><span>iTax CSV</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ LOGO STRIP ============================ -->
+<!-- <section class="logos">
+  <div class="wrap logos-inner">
+    <span class="bold">Brookside</span>
+    <span class="bold">Chandaria</span>
+    <span class="bold">SAFARICOM</span>
+    <span class="bold">EQUITY</span>
+    <span class="bold">Bidco</span>
+    <span class="bold">Naivas</span>
+    <span class="bold">KCB</span>
+    <span class="bold">Twiga</span>
+    <span class="bold">Sendy</span>
+    <span class="bold">Jumia</span>
+  </div>
+</section> -->
+
+<!-- ============================ GRADIENT STRIP ============================ -->
+<section class="strip">
+  <div class="wrap strip-inner">
+    <div>
+      <div class="eyebrow">Available now · free, no signup</div>
+      <h2>Use it before<br/>we even launch.</h2>
+      <p>KRA Tools is a free toolkit of utilities — PIN validation, VAT math, ETR slip OCR, CSV reformatting. Ushuru AI is an assistant grounded in KRA's own documentation. Both work today, in your browser.</p>
+      <a class="btn btn-dark btn-lg" href="waitlist.html">Open the tools  →</a>
+    </div>
+    <div class="strip-art" aria-hidden="true">
+      <div class="face"></div>
+      <div class="panel">~/ushuru-tools$</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ AVAILABLE NOW ============================ -->
+<section class="sect avail" id="available">
+  <div class="wrap">
+    <div class="sect-head">
+      <span class="eyebrow">What's live today</span>
+      <h2>The platform is coming.<br/>Two pieces are already here.</h2>
+      <p>While we build the full VAT3 filing platform, the tools and the assistant our team uses every month are free for you to use too.</p>
+    </div>
+
+    <div class="avail-grid">
+      <div class="acard" id="tools">
+        <div class="ahead">
+          <div>
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+            <h3>KRA Tools</h3>
+            <p>Eight focused utilities. Free, browser-only, no account.</p>
+          </div>
+          <span class="live-tag">Live now</span>
+        </div>
+        <div class="tool-list">
+          <a class="ti" href="waitlist.html"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>KRA PIN validator<span class="arr">→</span></a>
+          <a class="ti" href="waitlist.html"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>VAT calculator<span class="arr">→</span></a>
+          <a class="ti" href="waitlist.html"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>ETR receipt OCR<span class="arr">→</span></a>
+          <a class="ti" href="waitlist.html"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>VAT3 CSV reformatter<span class="arr">→</span></a>
+          <a class="ti" href="waitlist.html"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Filing deadline calendar<span class="arr">→</span></a>
+          <a class="ti" href="waitlist.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 2v20M2 12h20"/></svg>WHVAT credit checker<span class="arr">→</span></a>
+          <a class="ti" href="waitlist.html"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>PAYE quick estimate<span class="arr">→</span></a>
+          <a class="ti" href="waitlist.html"><svg viewBox="0 0 24 24"><path d="M21 21H4a2 2 0 0 1-2-2V3M22 12l-5-5M7 14l3 3 7-7"/></svg>Penalty estimator<span class="arr">→</span></a>
+        </div>
+        <div class="acta">
+          <a class="btn btn-violet" href="waitlist.html">Open KRA Tools</a>
+          <a class="btn btn-ghost" href="waitlist.html">See all 8 →</a>
+          <span class="meta">FREE · NO SIGNUP</span>
+        </div>
+      </div>
+
+      <div class="acard" id="ai">
+        <div class="ahead">
+          <div>
+            <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></div>
+            <h3>Ushuru AI</h3>
+            <p>An assistant trained on KRA's full documentation — VAT Act, Finance Acts, iTax guides, ETR specs.</p>
+          </div>
+          <span class="live-tag">Live now</span>
+        </div>
+        <div class="ai-chat">
+          <div class="ai-msg user">
+            <span class="who">You</span>
+            <span class="body">If a supplier didn't give me an ETR receipt, can I still claim input VAT on the invoice?</span>
+          </div>
+          <div class="ai-msg">
+            <span class="who">AI</span>
+            <span class="body">No. Under Section 17(3) of the VAT Act, input VAT is only deductible against a tax invoice from a registered supplier issued through an ETR/TIMS-compliant device. Without a valid ETR receipt the input VAT cannot be claimed — even if the underlying invoice is genuine.<span class="cite">VAT Act §17(3)</span><span class="cite">eTIMS Guide p.12</span></span>
+          </div>
+          <div class="ai-input">
+            <span>Ask anything about Kenyan tax…</span>
+            <span class="blink"></span>
+          </div>
+        </div>
+        <div class="acta">
+          <a class="btn btn-violet" href="waitlist.html">Open Ushuru AI</a>
+          <a class="btn btn-ghost" href="waitlist.html">Example questions →</a>
+          <span class="meta">25 / DAY FREE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap" id="waitlist">
+      <div class="roadmap-head">
+        <h3>Next up. <span class="accent">All in build now.</span></h3>
+        <span class="right"><span style="width:6px;height:6px;border-radius:999px;background:var(--orange);display:inline-block;"></span>Targeting Q2–Q4 2026</span>
+      </div>
+
+      <div class="roadmap-grid">
+
+        <div class="rcard">
+          <div class="rhead">
+            <div class="ric">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6M9 9h2"/></svg>
+            </div>
+            <span class="eta">Q3 2026</span>
+          </div>
+          <div>
+            <div class="kicker">Filing platform</div>
+            <h4>Full VAT3 platform</h4>
+          </div>
+          <p>Drop in a folder of receipts and invoices, get a reviewed VAT3 CSV out the other end. Every line traced back to its source.</p>
+          <div class="stat">
+            <span><b>2,400</b> on waitlist</span>
+            <a class="waitlink" href="waitlist.html">JOIN →</a>
+          </div>
+        </div>
+
+        <div class="rcard">
+          <div class="rhead">
+            <div class="ric">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a2 2 0 0 1 0 4H9"/></svg>
+            </div>
+            <span class="eta">Q2 2026</span>
+          </div>
+          <div>
+            <div class="kicker">Turnover Tax (TOT)</div>
+            <h4>3% on gross turnover — sorted.</h4>
+          </div>
+          <p>For businesses with annual revenue KSh 1M–50M. The new 3% rate confused owners; we make it one tap. Most of Kenya's SMEs fall here.</p>
+          <div class="stat">
+            <span><b>KSh 1M–50M</b> bracket</span>
+            <a class="waitlink" href="waitlist.html">EARLY ACCESS →</a>
+          </div>
+        </div>
+
+        <div class="rcard">
+          <div class="rhead">
+            <div class="ric">
+              <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/><circle cx="17" cy="15" r="3" fill="currentColor" opacity="0.2"/></svg>
+            </div>
+            <span class="eta">Q3 2026</span>
+          </div>
+          <div>
+            <div class="kicker">eTIMS Invoicing</div>
+            <h4>Issue compliant invoices, instantly.</h4>
+          </div>
+          <p>Generate sales invoices that sync directly with eTIMS, validated before the customer ever sees them. Mandatory for VAT-registered businesses — now zero-friction.</p>
+          <div class="stat">
+            <span><b>Mandatory</b> for VAT</span>
+            <a class="waitlink" href="waitlist.html">EARLY ACCESS →</a>
+          </div>
+        </div>
+
+        <div class="rcard">
+          <div class="rhead">
+            <div class="ric">
+              <svg viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+            </div>
+            <span class="eta">Q4 2026</span>
+          </div>
+          <div>
+            <div class="kicker">WHT &amp; PAYE</div>
+            <h4>Withholding tax &amp; payroll.</h4>
+          </div>
+          <p>Same engine, two more returns. Match WHT certificates by PIN; compute PAYE bands with NHIF and NSSF baked in. P10 export to iTax.</p>
+          <div class="stat">
+            <span><b>P10</b> + WHT certs</span>
+            <a class="waitlink" href="waitlist.html">EARLY ACCESS →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROBLEM ============================ -->
+<section class="problem sect" id="platform">
+  <div class="wrap">
+    <span class="eyebrow">The platform · preview</span>
+    <div class="row">
+      <div>
+        <h3>Replace your<br/>brittle filing<br/>spreadsheets</h3>
+        <p>Ushuru Flow persists every transaction in your filing period and has built-in retries, validation, ETR reconciliation, and PIN checks — so your VAT3 always picks up where it left off.</p>
+        <p>Use the <a href="#tools" class="link">free tools</a> today, or <a href="#waitlist" class="link">join the waitlist</a> for the full platform.</p>
+      </div>
+      <div class="diagram">
+        <svg viewBox="0 0 480 280" fill="none">
+          <!-- Your environment -->
+          <rect x="16" y="16" width="220" height="248" rx="6" stroke="#82AAFF" stroke-width="1.5" stroke-dasharray="3 3" fill="rgba(130,170,255,0.04)"/>
+          <text x="36" y="38" fill="#82AAFF" font-family="Geist Mono" font-size="10" letter-spacing="2">YOUR DOCUMENTS</text>
+          <rect x="36" y="54" width="160" height="160" rx="4" fill="#0F2D5C" stroke="#82AAFF" stroke-width="1"/>
+          <text x="48" y="72" fill="#C3E88D" font-family="Geist Mono" font-size="10">Invoices</text>
+          <rect x="48" y="80" width="120" height="22" rx="2" fill="rgba(195,232,141,0.18)" stroke="#C3E88D" stroke-width="0.7"/>
+          <text x="48" y="118" fill="#C3E88D" font-family="Geist Mono" font-size="10">ETR slips</text>
+          <rect x="48" y="126" width="120" height="22" rx="2" fill="rgba(195,232,141,0.18)" stroke="#C3E88D" stroke-width="0.7"/>
+          <text x="48" y="164" fill="#C3E88D" font-family="Geist Mono" font-size="10">CSV exports</text>
+          <rect x="48" y="172" width="120" height="22" rx="2" fill="rgba(195,232,141,0.18)" stroke="#C3E88D" stroke-width="0.7"/>
+          <rect x="56" y="220" width="120" height="28" rx="3" fill="#1B1830" stroke="#8B7FFF" stroke-width="1"/>
+          <text x="84" y="238" fill="#8B7FFF" font-family="Geist Mono" font-size="10">Ushuru SDK</text>
+
+          <!-- Connectors -->
+          <path d="M236 90 L296 90" stroke="#8B7FFF" stroke-width="1" stroke-dasharray="2 3"/>
+          <path d="M236 130 L296 130" stroke="#8B7FFF" stroke-width="1" stroke-dasharray="2 3"/>
+          <path d="M236 170 L296 170" stroke="#8B7FFF" stroke-width="1" stroke-dasharray="2 3"/>
+          <circle cx="266" cy="90" r="3" fill="#8B7FFF"/>
+          <circle cx="266" cy="130" r="3" fill="#8B7FFF"/>
+          <circle cx="266" cy="170" r="3" fill="#8B7FFF"/>
+
+          <!-- Top boxes -->
+          <rect x="296" y="40" width="80" height="32" rx="4" fill="#1B1830" stroke="#8B7FFF" stroke-width="1"/>
+          <text x="312" y="60" fill="#A99FFF" font-family="Geist Mono" font-size="10">VAT3 CLI</text>
+          <rect x="384" y="40" width="80" height="32" rx="4" fill="#1B1830" stroke="#8B7FFF" stroke-width="1"/>
+          <text x="402" y="60" fill="#A99FFF" font-family="Geist Mono" font-size="10">WebUI</text>
+
+          <!-- Service block -->
+          <rect x="296" y="88" width="168" height="160" rx="6" fill="rgba(139,127,255,0.10)" stroke="#8B7FFF" stroke-width="1.5"/>
+          <text x="316" y="108" fill="#A99FFF" font-family="Geist Mono" font-size="10" letter-spacing="1">Ushuru Service</text>
+          <rect x="312" y="120" width="68" height="44" rx="3" fill="#1B1830" stroke="#8B7FFF" stroke-width="0.8"/>
+          <text x="328" y="146" fill="#A99FFF" font-family="Geist Mono" font-size="9">Extract</text>
+          <rect x="384" y="120" width="68" height="44" rx="3" fill="#1B1830" stroke="#8B7FFF" stroke-width="0.8"/>
+          <text x="400" y="146" fill="#A99FFF" font-family="Geist Mono" font-size="9">Reconcile</text>
+          <rect x="312" y="172" width="68" height="44" rx="3" fill="#1B1830" stroke="#8B7FFF" stroke-width="0.8"/>
+          <text x="328" y="198" fill="#A99FFF" font-family="Geist Mono" font-size="9">Validate</text>
+          <rect x="384" y="172" width="68" height="44" rx="3" fill="#1B1830" stroke="#8B7FFF" stroke-width="0.8"/>
+          <text x="404" y="198" fill="#A99FFF" font-family="Geist Mono" font-size="9">VAT3</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <h3>Get full visibility<br/>into every<br/>filing</h3>
+        <p>No more sifting through ETR slips and supplier WhatsApps. Get visibility into the exact state of every transaction in your filing period — with a one-click trace from any return line back to its source receipt.</p>
+      </div>
+      <div class="dash-shot">
+        <div class="bar">
+          <div class="lights"><span style="background:#FF5F57"></span><span style="background:#FEBC2E"></span><span style="background:#28C840"></span></div>
+          <div class="crumb">mwangi-hardware-ltd / vat3 / 2026-04 · 19 Apr · 14:32</div>
+        </div>
+        <div class="timeline">
+          <div class="tline"><div class="lbl">extract:invoices</div><div class="track"><div class="fill" style="left:0%; width:35%"></div></div><div class="ms">2.4s</div></div>
+          <div class="tline"><div class="lbl">extract:etr</div><div class="track"><div class="fill" style="left:32%; width:22%"></div></div><div class="ms">1.6s</div></div>
+          <div class="tline"><div class="lbl">ocr:slips</div><div class="track"><div class="fill" style="left:50%; width:30%"></div></div><div class="ms">2.1s</div></div>
+          <div class="tline"><div class="lbl">resolve:pins</div><div class="track"><div class="fill" style="left:55%; width:18%"></div></div><div class="ms">1.2s</div></div>
+          <div class="tline"><div class="lbl">reconcile</div><div class="track"><div class="fill" style="left:75%; width:12%"></div></div><div class="ms">800ms</div></div>
+          <div class="tline"><div class="lbl">validate:vat3</div><div class="track"><div class="fill" style="left:84%; width:10%"></div></div><div class="ms">650ms</div></div>
+          <div class="tline"><div class="lbl">build:csv</div><div class="track"><div class="fill" style="left:92%; width:6%"></div></div><div class="ms">390ms</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ USE CASES ============================ -->
+<section class="cases sect" id="cases">
+  <div class="wrap">
+    <div class="sect-head">
+      <span class="eyebrow">Patterns</span>
+      <h2>Common patterns and use<br/>cases</h2>
+    </div>
+    <div class="cases-grid">
+      <div class="case">
+        <div class="cic"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M5 12H2M22 12h-3M6.3 6.3 4 4M20 20l-2.3-2.3M6.3 17.7 4 20M20 4l-2.3 2.3"/></svg></div>
+        <h4>Multi-business filing</h4>
+        <p>Group owners and accountants — switch between businesses, file each one in minutes, every figure traced.</p>
+      </div>
+      <div class="case">
+        <div class="cic"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11l-3-3M19 11l3-3"/></svg></div>
+        <h4>Humans-in-the-loop</h4>
+        <p>The AI flags low-confidence extractions and waits for your review. No auto-filing, no surprises.</p>
+      </div>
+      <div class="case">
+        <div class="cic"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg></div>
+        <h4>Compensating Patterns</h4>
+        <p>Filed wrong? File an amendment in seconds with a one-click diff against the original return.</p>
+      </div>
+      <div class="case">
+        <div class="cic"><svg viewBox="0 0 24 24"><path d="M12 2v20M5 6h14M5 18h14"/></svg></div>
+        <h4>Long-period filings</h4>
+        <p>Annual returns, backlog clean-ups, multi-quarter reconciliation — without losing context or audit trail.</p>
+      </div>
+      <div class="case">
+        <div class="cic"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h13"/></svg></div>
+        <h4>Order &amp; ETR Reconciliation</h4>
+        <p>One bad ETR slip shouldn't break your VAT3. Match supplier invoices to ETR serials automatically.</p>
+      </div>
+      <div class="case">
+        <div class="cic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <h4>Durable Audit Ledgers</h4>
+        <p>Every line in your return links back to its source receipt with timestamp. Defend any figure, months later.</p>
+      </div>
+      <div class="case">
+        <div class="cic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+        <h4>Filing CI/CD</h4>
+        <p>For accountants. Templates, bulk review, scheduled exports — file ten clients in the time you used to spend on one.</p>
+      </div>
+      <div class="case">
+        <div class="cic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div>
+        <h4>Customer Acquisition</h4>
+        <p>Stop dreading the 19th. Onboard new businesses, route invoices, engage clients without dropped steps.</p>
+      </div>
+      <div class="case">
+        <div class="cic"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6z"/></svg></div>
+        <h4>WHT &amp; PAYE</h4>
+        <p>Coming next. Same engine handles withholding tax and payroll. Roadmap is public — see what's shipping when.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CUSTOMERS ============================ -->
+<section class="customers" id="customers" style="display:none;">
+  <div class="wrap">
+    <div class="sect-head">
+      <span class="eyebrow">Trusted by</span>
+      <h2>Kenyan SMEs and accounting<br/>firms choose Ushuru Flow</h2>
+    </div>
+    <div class="video-row">
+      <a class="vcard" href="#">
+        <div class="vthumb t1"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="vbody">
+          <h4>Mwangi Hardware cut their VAT3 from 2 days to 25 minutes</h4>
+          <span class="watch">Watch Mwangi's story →</span>
+        </div>
+      </a>
+      <a class="vcard" href="#">
+        <div class="vthumb t2"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="vbody">
+          <h4>Westlands Accountants files for 47 SMEs in one afternoon</h4>
+          <span class="watch">Watch their workflow →</span>
+        </div>
+      </a>
+      <a class="vcard" href="#">
+        <div class="vthumb t3"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="vbody">
+          <h4>Brookside Dairy reconciled 12 months of ETR in two evenings</h4>
+          <span class="watch">Watch the case study →</span>
+        </div>
+      </a>
+      <a class="vcard" href="#">
+        <div class="vthumb t4"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>
+        <div class="vbody">
+          <h4>Kibera Tax Clinic uses Ushuru AI for free client advice</h4>
+          <span class="watch">Watch the talk →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ QUOTES STRIP ============================ -->
+<!-- <section class=”quotes”>
+  <div class=”wrap quotes-inner”>
+    <div class=”qcard”>
+      <div class=”qmark”>”</div>
+      <p class=”q”>One of the most useful pieces of tech I've seen in years. Ushuru Flow does for VAT3 what M-Pesa did for payments — the surface exposed to the SME owner is a beautiful “file()” function for what used to be a three-day ordeal.</p>
+      <div class=”footer”>
+        <div class=”person”>
+          <div class=”av”></div>
+          <div>
+            <div class=”name”>Wanjiru Kamau</div>
+            <div class=”role”>CEO, Mwangi Hardware Ltd</div>
+          </div>
+        </div>
+        <span class=”corp”><span class=”corp-mark”></span>Mwangi</span>
+      </div>
+    </div>
+    <div class=”qcard”>
+      <div class=”qmark”>”</div>
+      <p class=”q”>Ushuru AI answered every question my tax consultant used to charge me for, with the VAT Act citation right next to the answer.</p>
+      <p class=”q”>Without it I'd have spent another weekend on hold with KRA. The team can finally focus on running the business.</p>
+      <div class=”footer”>
+        <div class=”person”>
+          <div class=”av”></div>
+          <div>
+            <div class=”name”>Daniel Mutua</div>
+            <div class=”role”>Partner, Westlands Accountants</div>
+          </div>
+        </div>
+        <span class=”corp”><span class=”corp-mark”></span>Westlands</span>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ============================ OPEN SOURCE / TRUST ============================ -->
+<section class="os">
+  <div class="wrap os-grid">
+    <div>
+      <span class="eyebrow" style="color: var(--lime);">COMMITTED TO KENYAN BUSINESSES</span>
+      <h2>100% built<br/>in Nairobi</h2>
+      <p>Made by a small team that's spent enough Friday evenings on iTax to know exactly what's missing. KRA Tools and Ushuru AI will always stay free.</p>
+      <div class="actions">
+        <!-- <span class="badge-pill">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.51 2.87 8.34 6.84 9.7.5.09.68-.22.68-.49v-1.7c-2.78.62-3.37-1.35-3.37-1.35-.45-1.17-1.11-1.48-1.11-1.48-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.13-4.55-5.04 0-1.11.39-2.02 1.03-2.74-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.04A9.4 9.4 0 0 1 12 7.07c.85.004 1.7.117 2.5.34 1.91-1.31 2.75-1.04 2.75-1.04.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.74 0 3.92-2.34 4.78-4.57 5.03.36.32.68.94.68 1.9v2.81c0 .27.18.59.69.49C19.13 20.59 22 16.76 22 12.25 22 6.58 17.52 2 12 2z"/></svg>
+          Trusted by 1,200+ SMEs
+        </span> -->
+        <span class="badge-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6z"/></svg>
+          Hosted in-region
+        </span>
+      </div>
+    </div>
+    <div class="os-art" aria-hidden="true">
+      <div class="ring"></div>
+      <div class="src-tag">● LIVE NOW</div>
+      <div class="bin b1">10<br/>0110<br/>1010</div>
+      <div class="bin b2">10011<br/>00101<br/>11010</div>
+      <div class="bin b3">011<br/>1100<br/>10</div>
+      <div class="bin b4">10101<br/>00<br/>1</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER CTA ============================ -->
+<section class="footcta" id="pricing">
+  <div class="wrap inner">
+    <span class="eyebrow">Ready when you are</span>
+    <h2>Try the free tools today.<br/>Be first in when the platform launches.</h2>
+    <p>KRA Tools and Ushuru AI are free, right now — no signup. The full filing platform is in build; waitlist gets early access and first month free at launch.</p>
+    <div class="btns">
+      <a class="btn btn-violet btn-lg" href="waitlist.html">Try KRA Tools — free</a>
+      <a class="btn btn-light btn-lg" href="waitlist.html">Ask Ushuru AI</a>
+      <a class="btn btn-ghost btn-lg" href="waitlist.html">Join the waitlist →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#"><span class="mark"></span>Ushuru&thinsp;Flow</a>
+        <p>VAT3 in minutes, not days. With every figure traceable to its source.</p>
+        <p style="margin-top:10px;">For questions reach out to: <a href="mailto:matthewphilkan@gmail.com" style="color:var(--violet-2); border-bottom:1px solid currentColor;">matthewphilkan@gmail.com</a></p>
+      </div>
+      <div class="foot-col">
+        <h5>Available now</h5>
+        <ul>
+          <li><a href="#tools">KRA Tools</a></li>
+          <li><a href="#ai">Ushuru AI</a></li>
+          <li><a href="waitlist.html">All 8 utilities</a></li>
+          <li><a href="waitlist.html">Example questions</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="#platform">How it'll work</a></li>
+          <li><a href="#cases">Use cases</a></li>
+          <li><a href="#pricing">Pricing at launch</a></li>
+          <li><a href="waitlist.html">Join waitlist</a></li>
+          <li><a href="#">Roadmap</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="#">Security</a></li>
+          <li><a href="#">Data Protection</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Ushuru Flow </span>
+      <span>+254 712 345 678 · hello@ushuruflow.co.ke</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================ TWEAKS ============================ -->
+<div class="tweaks" id="tweaks">
+  <h6>Tweaks · Live</h6>
+  <div class="row">
+    <label>Theme</label>
+    <select id="t-theme">
+      <option value="dark">Dark</option>
+      <option value="light">Light</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Accent</label>
+    <div class="swatches" id="t-swatches">
+      <button data-c="#8B7FFF" style="background:#8B7FFF" class="on"></button>
+      <button data-c="#E8FF5C" style="background:#E8FF5C"></button>
+      <button data-c="#FF6BD6" style="background:#FF6BD6"></button>
+      <button data-c="#FFA452" style="background:#FFA452"></button>
+      <button data-c="#5BD0FF" style="background:#5BD0FF"></button>
+    </div>
+  </div>
+  <div class="row">
+    <label>Hero headline</label>
+    <select id="t-headline">
+      <option value="vat3">VAT3 / never failed</option>
+      <option value="19th">The 19th, finally handled</option>
+      <option value="punchy">Minutes, not days</option>
+    </select>
+  </div>
+</div>
+
+<script>
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "theme": "light",
+    "accent": "#8B7FFF",
+    "headline": "19th"
+  }/*EDITMODE-END*/;
+  const state = { ...TWEAK_DEFAULTS };
+
+  const headlines = {
+    vat3:   'What if your<br/>VAT3 just<br/>filed itself?',
+    "19th": 'The 19th,<br/>finally<br/>handled.',
+    punchy: 'VAT3 in<br/>minutes,<br/>not days.'
+  };
+
+  function apply() {
+    document.documentElement.setAttribute('data-theme', state.theme);
+    document.documentElement.style.setProperty('--violet', state.accent);
+    // derive a slightly lighter version
+    document.documentElement.style.setProperty('--violet-2', state.accent);
+    const h1 = document.querySelector('.hero h1');
+    if (h1 && headlines[state.headline]) h1.innerHTML = headlines[state.headline];
+    document.getElementById('t-theme').value = state.theme;
+    document.getElementById('t-headline').value = state.headline;
+  }
+  function persist() {
+    try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { ...state } }, '*'); } catch(e) {}
+  }
+
+  // Theme toggle button
+  document.getElementById('theme-btn').addEventListener('click', () => {
+    state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    apply(); persist();
+  });
+
+  document.getElementById('t-theme').addEventListener('change', e => { state.theme = e.target.value; apply(); persist(); });
+  document.getElementById('t-headline').addEventListener('change', e => { state.headline = e.target.value; apply(); persist(); });
+  document.getElementById('t-swatches').addEventListener('click', e => {
+    const b = e.target.closest('button[data-c]'); if (!b) return;
+    document.querySelectorAll('#t-swatches button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    state.accent = b.dataset.c; apply(); persist();
+  });
+
+  window.addEventListener('message', ev => {
+    const d = ev.data || {};
+    if (d.type === '__activate_edit_mode')   document.getElementById('tweaks').classList.add('on');
+    if (d.type === '__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('on');
+  });
+  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e) {}
+
+  apply();
+</script>
+
+</body>
+</html>

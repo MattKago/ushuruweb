@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  
+  <rect x="4" y="4" width="40" height="40" rx="8" stroke="currentColor" stroke-width="2"></rect>
+  <rect x="11" y="11" width="26" height="26" rx="3" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2.5" opacity="0.4"></rect>
+  <circle cx="31" cy="31" r="5.5" fill="#C8641B"></circle>
+  
+  <text x="56" y="32" font-family="&#39;Instrument Serif&#39;, &#39;Iowan Old Style&#39;, Georgia, serif" font-size="26" fill="currentColor">Ushuru Flow</text>
+</svg>

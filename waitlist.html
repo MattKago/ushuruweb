@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Join the waitlist — Ushuru Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* TOKENS — mirror Temporal-style main page */
+:root[data-theme="dark"] {
+  --bg: #0B0B10; --bg-2: #0F0F17; --bg-3: #15151F;
+  --surface: #1A1A26; --surface-2: #20202E;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.16);
+  --fg: #F2F0EA; --fg-2: #B6B2A6; --fg-3: #807C72; --fg-4: #5A5750;
+  --violet: #8B7FFF; --violet-2: #A99FFF; --violet-deep: #4F3FE0;
+  --violet-wash: rgba(139,127,255,0.14);
+  --lime: #E8FF5C; --orange: #FFA452; --pink: #FF6BD6;
+  --hero-grad:
+    radial-gradient(ellipse 1100px 600px at 80% -10%, rgba(120,80,255,0.35), transparent 60%),
+    radial-gradient(ellipse 700px 400px at 0% 0%, rgba(40,90,180,0.18), transparent 55%),
+    linear-gradient(180deg, #15131F 0%, #0B0B10 100%);
+  --grid-line: rgba(255,255,255,0.04);
+}
+:root[data-theme="light"] {
+  --bg: #FFFFFF; --bg-2: #FAF9F6; --bg-3: #F2F0EA;
+  --surface: #FFFFFF; --surface-2: #F7F5F0;
+  --line: rgba(15,15,20,0.10); --line-strong: rgba(15,15,20,0.20);
+  --fg: #0E0E14; --fg-2: #3D3B36; --fg-3: #6B6862; --fg-4: #98948B;
+  --violet: #5A4AE6; --violet-2: #4338C9; --violet-deep: #3328A8;
+  --violet-wash: rgba(90,74,230,0.10);
+  --lime: #C8E83D; --orange: #FF7A52; --pink: #E94CB8;
+  --hero-grad:
+    radial-gradient(ellipse 1100px 600px at 80% -10%, rgba(140,110,255,0.18), transparent 60%),
+    radial-gradient(ellipse 700px 400px at 0% 0%, rgba(50,100,200,0.08), transparent 55%),
+    linear-gradient(180deg, #FAF9F6 0%, #FFFFFF 100%);
+  --grid-line: rgba(15,15,20,0.05);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased;
+  line-height: 1.55; min-height: 100vh; display: flex; flex-direction: column;
+}
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { font-family: 'Geist', sans-serif; font-weight: 300; letter-spacing: -0.02em; margin: 0; color: var(--fg); }
+h1 { font-size: clamp(40px, 5vw, 56px); line-height: 1.04; }
+h3 { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+p { margin: 0; color: var(--fg-2); }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; width: 100%; }
+@media (max-width: 720px) { .wrap { padding: 0 20px; } }
+
+/* NAV */
+.nav { border-bottom: 1px solid var(--line); background: var(--bg); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-size: 19px; font-weight: 500; letter-spacing: -0.01em; }
+.brand .mark {
+  width: 24px; height: 24px; border-radius: 6px; position: relative;
+  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
+}
+.brand .mark::after { content: ''; position: absolute; inset: 5px; border: 1.5px dashed rgba(255,255,255,0.55); border-radius: 3px; }
+.brand .mark::before { content: ''; position: absolute; right: 3px; bottom: 3px; width: 7px; height: 7px; border-radius: 999px; background: var(--lime); }
+.nav-right { display: flex; gap: 12px; align-items: center; }
+.back-link { font-size: 13px; color: var(--fg-2); display: inline-flex; align-items: center; gap: 6px; }
+.back-link:hover { color: var(--fg); }
+.theme-toggle {
+  width: 32px; height: 32px; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: transparent; color: var(--fg-2);
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.theme-toggle:hover { color: var(--fg); border-color: var(--fg-2); }
+.theme-toggle svg { width: 14px; height: 14px; }
+.theme-toggle .ico-light { display: none; }
+:root[data-theme="dark"] .theme-toggle .ico-dark { display: none; }
+:root[data-theme="dark"] .theme-toggle .ico-light { display: block; }
+
+/* HERO + FORM */
+.main {
+  flex: 1; background: var(--hero-grad); position: relative; overflow: hidden;
+}
+.main::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 80%, transparent 100%);
+  pointer-events: none;
+}
+.main-inner {
+  position: relative; z-index: 1; padding: 64px 0 96px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+}
+@media (max-width: 880px) {
+  .main-inner { grid-template-columns: 1fr; gap: 40px; padding: 48px 0 72px; }
+}
+
+.eyebrow {
+  font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--violet);
+  margin-bottom: 18px; display: inline-block;
+}
+.lede h1 .accent { color: var(--violet); }
+.lede p.sub { margin-top: 22px; font-size: 17px; color: var(--fg-2); max-width: 460px; }
+.perk-list { list-style: none; padding: 0; margin: 32px 0 0; display: flex; flex-direction: column; gap: 14px; }
+.perk-list li { display: flex; gap: 12px; font-size: 14px; color: var(--fg-2); align-items: flex-start; }
+.perk-list .check {
+  width: 18px; height: 18px; border-radius: 999px; background: var(--violet-wash);
+  color: var(--violet); display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.perk-list .check svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Form card */
+.card {
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px;
+  padding: 36px; max-width: 480px; justify-self: end; width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  position: relative; overflow: hidden;
+}
+:root[data-theme="dark"] .card { box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.card::before {
+  content: ''; position: absolute; left: 0; top: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--violet) 0%, var(--pink) 50%, var(--orange) 100%);
+}
+@media (max-width: 880px) { .card { justify-self: stretch; padding: 28px; } }
+
+.card .title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.card h3 { font-size: 22px; font-weight: 500; }
+.live-tag {
+  font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--orange); padding: 4px 9px;
+  border: 1px solid color-mix(in srgb, var(--orange) 35%, transparent); border-radius: 999px;
+  background: color-mix(in srgb, var(--orange) 10%, transparent);
+}
+.card .subline { font-size: 13.5px; color: var(--fg-3); margin-bottom: 24px; }
+
+.field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.field label { font-size: 12px; font-weight: 500; color: var(--fg-2); font-family: 'Geist Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; }
+.field input, .field select {
+  width: 100%; padding: 13px 14px; font-family: inherit; font-size: 15px;
+  background: var(--bg); color: var(--fg);
+  border: 1px solid var(--line-strong); border-radius: 7px; outline: none;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.field input::placeholder { color: var(--fg-4); }
+.field input:focus, .field select:focus { border-color: var(--violet); }
+.field input.invalid, .field select.invalid { border-color: var(--orange) !important; background: color-mix(in srgb, var(--orange) 5%, var(--bg)); }
+.field-hint {
+  display: none; font-size: 12px; color: var(--orange);
+  font-family: 'Geist Mono', monospace; letter-spacing: 0.03em;
+}
+.field-hint.show { display: block; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 540px) { .field-row { grid-template-columns: 1fr; } }
+
+.terms-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 12.5px; color: var(--fg-3); line-height: 1.55;
+  margin: 8px 0 20px;
+}
+.terms-row input[type=checkbox] {
+  margin-top: 3px; accent-color: var(--violet); width: 14px; height: 14px;
+}
+.terms-row.invalid label { color: var(--orange); }
+.terms-row a { color: var(--violet-2); border-bottom: 1px solid currentColor; }
+.terms-row a:hover { color: var(--violet); }
+.terms-hint { display: none; font-size: 12px; color: var(--orange); font-family: 'Geist Mono', monospace; letter-spacing: 0.03em; margin-top: -14px; margin-bottom: 12px; }
+.terms-hint.show { display: block; }
+
+.btn-submit {
+  width: 100%; padding: 14px 18px;
+  font-family: inherit; font-size: 15px; font-weight: 500;
+  background: var(--violet); color: #fff; border: 0; border-radius: 7px;
+  cursor: pointer;
+  transition: background 120ms ease, transform 80ms ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-submit:hover { background: var(--violet-deep); }
+.btn-submit:active { transform: translateY(1px); }
+.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-submit svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.note {
+  margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line);
+  font-family: 'Geist Mono', monospace; font-size: 11px;
+  color: var(--fg-3); letter-spacing: 0.04em;
+  display: flex; align-items: center; gap: 8px;
+}
+.note::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: var(--lime); }
+
+.form-error {
+  display: none; margin-bottom: 14px; padding: 11px 14px;
+  border-radius: 7px; font-size: 13.5px; line-height: 1.5;
+  background: color-mix(in srgb, var(--orange) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--orange) 35%, transparent);
+  color: var(--orange);
+}
+.form-error.duplicate {
+  background: color-mix(in srgb, var(--violet) 10%, transparent);
+  border-color: color-mix(in srgb, var(--violet) 35%, transparent);
+  color: var(--violet);
+}
+
+/* Success state */
+.success {
+  text-align: center; padding: 12px 0 4px;
+  display: none;
+}
+.success.on { display: block; }
+.form-wrap.done { display: none; }
+.success .ic {
+  width: 56px; height: 56px; border-radius: 999px; margin: 0 auto 18px;
+  background: var(--violet-wash); color: var(--violet);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.success .ic svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.success h4 { font-family: 'Geist', sans-serif; font-weight: 500; font-size: 22px; letter-spacing: -0.01em; color: var(--fg); margin: 0 0 8px; }
+.success p { font-size: 14px; color: var(--fg-2); line-height: 1.55; }
+.success .you-link { display: inline-block; margin-top: 18px; font-size: 13px; color: var(--violet-2); border-bottom: 1px solid currentColor; }
+
+/* FOOTER */
+footer { padding: 32px 0; border-top: 1px solid var(--line); background: var(--bg); }
+.foot-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; color: var(--fg-3); flex-wrap: wrap; gap: 12px;
+}
+.foot-inner a { color: var(--fg-2); }
+.foot-inner a:hover { color: var(--fg); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span class="mark"></span>Ushuru&thinsp;Flow</a>
+    <div class="nav-right">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to home
+      </a>
+      <button class="theme-toggle" id="theme-btn" title="Toggle theme">
+        <svg class="ico-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="ico-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="wrap main-inner">
+
+    <div class="lede">
+      <span class="eyebrow">Coming soon · Early access</span>
+      <h1>Join the <span class="accent">waitlist.</span></h1>
+      <p class="sub">Ushuru Flow's full filing platform is in build. KRA Tools and Ushuru AI are free in the meantime — waitlist members get first access at launch.</p>
+
+      <ul class="perk-list">
+        <li>
+          <span class="check"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span><b style="color:var(--fg);font-weight:500;">First in</b> when the VAT3 platform launches</span>
+        </li>
+        <li>
+          <span class="check"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span><b style="color:var(--fg);font-weight:500;">First month free</b> on any paid plan</span>
+        </li>
+        <li>
+          <span class="check"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span><b style="color:var(--fg);font-weight:500;">Early access</b> to TOT, eTIMS Invoicing, WHT &amp; PAYE as each ships</span>
+        </li>
+        <li>
+          <span class="check"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span><b style="color:var(--fg);font-weight:500;">No spam.</b> Updates only when we ship something useful.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="form-wrap" id="form-wrap">
+        <div class="title-row">
+          <h3>Your spot on the list</h3>
+          <span class="live-tag">Q3 2026</span>
+        </div>
+        <p class="subline">Takes 20 seconds. We'll email when the platform's ready for you.</p>
+
+        <form id="waitlist-form" novalidate>
+          <div class="field">
+            <label for="email">Work email</label>
+            <input id="email" name="email" type="email" required placeholder="you@business.co.ke" autocomplete="email" />
+            <span class="field-hint" id="email-hint">Please enter a valid work email.</span>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="biz">Business name</label>
+              <input id="biz" name="biz" type="text" placeholder="Mwangi Hardware Ltd" autocomplete="organization" />
+              <span class="field-hint" id="biz-hint">Please enter your business name.</span>
+            </div>
+            <div class="field">
+              <label for="role">I am a</label>
+              <select id="role" name="role">
+                <option value="">Select role…</option>
+                <option>SME owner</option>
+                <option>Accountant / Bookkeeper</option>
+                <option>Tax consultant</option>
+                <option>Individual</option>
+                <option>Other</option>
+              </select>
+              <span class="field-hint" id="role-hint">Please select your role.</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="interest">Most interested in</label>
+            <select id="interest" name="interest">
+              <option value="">Select an option…</option>
+              <option>VAT3 platform</option>
+              <option>Turnover Tax (TOT)</option>
+              <option>eTIMS Invoicing</option>
+              <option>WHT &amp; PAYE</option>
+              <option>All of the above</option>
+            </select>
+            <span class="field-hint" id="interest-hint">Please select what you're most interested in.</span>
+          </div>
+
+          <div class="terms-row" id="terms-row">
+            <input id="agree" name="agree" type="checkbox" required />
+            <label for="agree">By joining, I agree to Ushuru Flow's <a href="terms.html" target="_blank" rel="noopener">Terms and Conditions</a> and acknowledge that Ushuru Flow is a software tool, not a tax agent.</label>
+          </div>
+          <span class="terms-hint" id="terms-hint">You must agree to the Terms and Conditions to continue.</span>
+
+          <div class="form-error" id="form-error"></div>
+
+          <button class="btn-submit" type="submit" id="submit-btn">
+            Join Waitlist
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+
+          <div class="note">No card. No spam. Unsubscribe in one click.</div>
+        </form>
+      </div>
+
+      <div class="success" id="success">
+        <div class="ic">
+          <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h4>You're on the list.</h4>
+        <p>We'll email <b id="email-echo" style="color:var(--fg);font-weight:500;"></b> when your seat is ready. In the meantime, KRA Tools and Ushuru AI are free to use.</p>
+        <a class="you-link" href="index.html">← Back to home</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 Ushuru Flow Ltd · Made in Nairobi.</span>
+    <span><a href="terms.html">Terms</a> · <a href="mailto:matthewphilkan@gmail.com">matthewphilkan@gmail.com</a></span>
+  </div>
+</footer>
+
+<script>
+  // Theme persistence across pages
+  const saved = localStorage.getItem('ushuru-theme');
+  if (saved === 'dark' || saved === 'light') {
+    document.documentElement.setAttribute('data-theme', saved);
+  }
+  document.getElementById('theme-btn').addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('ushuru-theme', next);
+  });
+
+  // Waitlist form submission
+  const WAITLIST_URL = 'https://aiwenjipvvvpeiahgdyl.supabase.co/functions/v1/waitlist-submit';
+  const SUPABASE_KEY = 'sb_publishable_noFCgTR48quaHVUQq98d6A_0pmTsjAn';
+
+  const BTN_DEFAULT_HTML = 'Join Waitlist <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+  const form = document.getElementById('waitlist-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const errEl = document.getElementById('form-error');
+
+  // Clear field error when user corrects it
+  ['email', 'biz', 'role', 'interest'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => clearFieldError(id));
+  });
+  document.getElementById('agree').addEventListener('change', () => {
+    document.getElementById('terms-row').classList.remove('invalid');
+    document.getElementById('terms-hint').classList.remove('show');
+  });
+
+  function setFieldError(id, hintId) {
+    const el = document.getElementById(id);
+    el.classList.add('invalid');
+    document.getElementById(hintId).classList.add('show');
+  }
+
+  function clearFieldError(id) {
+    document.getElementById(id).classList.remove('invalid');
+    document.getElementById(id + '-hint').classList.remove('show');
+  }
+
+  function validateForm() {
+    const email = document.getElementById('email').value.trim();
+    const biz = document.getElementById('biz').value.trim();
+    const role = document.getElementById('role').value;
+    const interest = document.getElementById('interest').value;
+    const agree = document.getElementById('agree').checked;
+    let valid = true;
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setFieldError('email', 'email-hint');
+      valid = false;
+    }
+    if (!biz) {
+      setFieldError('biz', 'biz-hint');
+      valid = false;
+    }
+    if (!role) {
+      setFieldError('role', 'role-hint');
+      valid = false;
+    }
+    if (!interest) {
+      setFieldError('interest', 'interest-hint');
+      valid = false;
+    }
+    if (!agree) {
+      document.getElementById('terms-row').classList.add('invalid');
+      document.getElementById('terms-hint').classList.add('show');
+      valid = false;
+    }
+
+    // Scroll to first invalid field
+    if (!valid) {
+      const first = form.querySelector('.invalid');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    return valid;
+  }
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    const email = document.getElementById('email').value.trim();
+
+    // Loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Joining…';
+    errEl.className = 'form-error';
+    errEl.style.display = 'none';
+
+    try {
+      const res = await fetch(WAITLIST_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'apikey': SUPABASE_KEY
+        },
+        body: JSON.stringify({
+          work_email: email,
+          business_name: document.getElementById('biz').value.trim(),
+          industry: document.getElementById('role').value,
+          most_interested_in: document.getElementById('interest').value
+        })
+      });
+
+      if (res.ok) {
+        try { localStorage.setItem('ushuru-waitlist-email', email); } catch (_) {}
+        document.getElementById('email-echo').textContent = email;
+        document.getElementById('form-wrap').classList.add('done');
+        document.getElementById('success').classList.add('on');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (res.status === 409) {
+        errEl.className = 'form-error duplicate';
+        errEl.textContent = 'This email is already on the waitlist — you\'re all set!';
+        errEl.style.display = 'block';
+        resetBtn();
+      } else {
+        errEl.className = 'form-error';
+        errEl.textContent = 'Something went wrong. Please try again in a moment.';
+        errEl.style.display = 'block';
+        resetBtn();
+      }
+    } catch (_) {
+      errEl.className = 'form-error';
+      errEl.textContent = 'Network error — please check your connection and try again.';
+      errEl.style.display = 'block';
+      resetBtn();
+    }
+  });
+
+  function resetBtn() {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = BTN_DEFAULT_HTML;
+  }
+</script>
+
+</body>
+</html>

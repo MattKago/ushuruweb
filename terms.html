@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Terms and Conditions — Ushuru Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root[data-theme="dark"] {
+  --bg: #0B0B10; --bg-2: #0F0F17; --bg-3: #15151F;
+  --surface: #1A1A26; --surface-2: #20202E;
+  --line: rgba(255,255,255,0.08); --line-strong: rgba(255,255,255,0.16);
+  --fg: #F2F0EA; --fg-2: #C4C0B4; --fg-3: #908C82; --fg-4: #5A5750;
+  --violet: #8B7FFF; --violet-2: #A99FFF; --violet-deep: #4F3FE0;
+  --lime: #E8FF5C; --orange: #FFA452;
+}
+:root[data-theme="light"] {
+  --bg: #FFFFFF; --bg-2: #FAF9F6; --bg-3: #F2F0EA;
+  --surface: #FFFFFF; --surface-2: #F7F5F0;
+  --line: rgba(15,15,20,0.10); --line-strong: rgba(15,15,20,0.20);
+  --fg: #0E0E14; --fg-2: #2D2B26; --fg-3: #6B6862; --fg-4: #98948B;
+  --violet: #5A4AE6; --violet-2: #4338C9; --violet-deep: #3328A8;
+  --lime: #C8E83D; --orange: #FF7A52;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased;
+  line-height: 1.65; font-size: 15.5px;
+}
+a { color: var(--violet-2); }
+a:hover { color: var(--violet); }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; width: 100%; }
+@media (max-width: 720px) { .wrap { padding: 0 20px; } }
+
+/* NAV */
+.nav { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-size: 19px; font-weight: 500; letter-spacing: -0.01em; color: var(--fg); text-decoration: none; }
+.brand .mark {
+  width: 24px; height: 24px; border-radius: 6px; position: relative;
+  background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%);
+}
+.brand .mark::after { content: ''; position: absolute; inset: 5px; border: 1.5px dashed rgba(255,255,255,0.55); border-radius: 3px; }
+.brand .mark::before { content: ''; position: absolute; right: 3px; bottom: 3px; width: 7px; height: 7px; border-radius: 999px; background: var(--lime); }
+.nav-right { display: flex; gap: 12px; align-items: center; }
+.back-link { font-size: 13px; color: var(--fg-2); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+.back-link:hover { color: var(--fg); }
+.theme-toggle {
+  width: 32px; height: 32px; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: transparent; color: var(--fg-2);
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.theme-toggle svg { width: 14px; height: 14px; }
+.theme-toggle .ico-light { display: none; }
+:root[data-theme="dark"] .theme-toggle .ico-dark { display: none; }
+:root[data-theme="dark"] .theme-toggle .ico-light { display: block; }
+.btn-join {
+  font-family: inherit; font-size: 13px; font-weight: 500;
+  padding: 8px 14px; border-radius: 6px;
+  background: var(--violet); color: #fff; text-decoration: none;
+}
+.btn-join:hover { background: var(--violet-deep); color: #fff; }
+
+/* HEADER BLOCK */
+.head {
+  padding: 64px 0 32px; border-bottom: 1px solid var(--line);
+}
+.eyebrow {
+  font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--violet);
+  margin-bottom: 16px; display: inline-block;
+}
+.head h1 {
+  font-family: 'Geist', sans-serif; font-weight: 300;
+  font-size: clamp(40px, 5vw, 60px); line-height: 1.04; letter-spacing: -0.025em;
+  color: var(--fg); margin: 0;
+}
+.head .meta {
+  margin-top: 16px;
+  font-family: 'Geist Mono', monospace; font-size: 12px;
+  color: var(--fg-3); display: flex; gap: 18px; flex-wrap: wrap;
+}
+
+/* ARTICLE LAYOUT */
+.article {
+  display: grid; grid-template-columns: 220px 1fr; gap: 56px;
+  padding: 56px 0 80px;
+}
+@media (max-width: 920px) {
+  .article { grid-template-columns: 1fr; gap: 32px; padding: 40px 0 64px; }
+  .toc { position: static !important; }
+}
+
+.toc {
+  position: sticky; top: 88px; align-self: start;
+  max-height: calc(100vh - 120px); overflow-y: auto; padding-right: 8px;
+}
+.toc h6 {
+  font-family: 'Geist Mono', monospace; font-size: 10px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--fg-3);
+  margin: 0 0 14px;
+}
+.toc ol { list-style: none; padding: 0; margin: 0; counter-reset: t; display: flex; flex-direction: column; gap: 8px; }
+.toc li { counter-increment: t; }
+.toc a {
+  display: block; padding: 4px 0; font-size: 12.5px; color: var(--fg-3);
+  text-decoration: none; line-height: 1.4; border-left: 2px solid transparent; padding-left: 10px;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.toc a::before { content: counter(t, decimal-leading-zero) " · "; color: var(--fg-4); font-family: 'Geist Mono', monospace; font-size: 10px; }
+.toc a:hover { color: var(--fg); border-left-color: var(--violet); }
+.toc a.on { color: var(--fg); border-left-color: var(--violet); }
+
+.content { max-width: 720px; }
+.content h2 {
+  font-family: 'Geist', sans-serif; font-weight: 500;
+  font-size: 24px; letter-spacing: -0.015em; color: var(--fg);
+  margin: 56px 0 16px; padding-top: 8px;
+}
+.content h2:first-child { margin-top: 0; }
+.content h2::before {
+  content: attr(data-num) " · ";
+  font-family: 'Geist Mono', monospace; font-size: 13px;
+  color: var(--violet); font-weight: 500; letter-spacing: 0.04em;
+  margin-right: 4px;
+}
+.content h3 {
+  font-family: 'Geist', sans-serif; font-weight: 500; font-size: 17px;
+  color: var(--fg); margin: 24px 0 8px;
+}
+.content p {
+  margin: 0 0 16px; color: var(--fg-2); line-height: 1.7;
+}
+.content p strong, .content strong { color: var(--fg); font-weight: 500; }
+.content ul {
+  margin: 0 0 16px; padding-left: 0; list-style: none;
+}
+.content ul li {
+  position: relative; padding-left: 22px; margin-bottom: 8px;
+  color: var(--fg-2); line-height: 1.7;
+}
+.content ul li::before {
+  content: ''; position: absolute; left: 4px; top: 12px;
+  width: 6px; height: 6px; border-radius: 999px; background: var(--violet); opacity: 0.6;
+}
+.content hr { display: none; }
+.content blockquote {
+  margin: 24px 0; padding: 14px 18px; border-left: 3px solid var(--violet);
+  background: color-mix(in srgb, var(--violet) 6%, transparent);
+  font-style: italic; color: var(--fg-2);
+}
+.content .key {
+  font-family: 'Geist Mono', monospace; font-size: 13.5px;
+  padding: 2px 6px; background: var(--bg-3); border-radius: 4px;
+  color: var(--fg);
+}
+.content em { font-style: italic; color: var(--fg-2); }
+
+.contact-box {
+  margin-top: 32px; padding: 24px 28px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.contact-box h3 { margin-top: 0; }
+.contact-box .item { display: flex; gap: 8px; font-size: 14px; color: var(--fg-2); margin-bottom: 6px; }
+.contact-box .item b { color: var(--fg); font-weight: 500; min-width: 80px; }
+
+.bottom {
+  border-top: 1px solid var(--line);
+  padding: 32px 0;
+  background: var(--bg-2);
+}
+.bottom-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  font-size: 13px; color: var(--fg-3);
+}
+.bottom .cta-row { display: flex; gap: 10px; align-items: center; }
+
+footer { padding: 32px 0; border-top: 1px solid var(--line); background: var(--bg); }
+.foot-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; color: var(--fg-3); flex-wrap: wrap; gap: 12px;
+}
+.foot-inner a { color: var(--fg-2); text-decoration: none; }
+.foot-inner a:hover { color: var(--fg); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span class="mark"></span>Ushuru&thinsp;Flow</a>
+    <div class="nav-right">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to home
+      </a>
+      <button class="theme-toggle" id="theme-btn" title="Toggle theme">
+        <svg class="ico-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="ico-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a class="btn-join" href="waitlist.html">Join Waitlist</a>
+    </div>
+  </div>
+</header>
+
+<section class="head">
+  <div class="wrap">
+    <span class="eyebrow">Legal</span>
+    <h1>Terms and Conditions</h1>
+    <div class="meta">
+      <span>Last updated · 13 May 2026</span>
+      <span>Governing law · Republic of Kenya</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap article">
+
+  <aside class="toc" aria-label="Table of contents">
+    <h6>Contents</h6>
+    <ol id="toc-list">
+      <li><a href="#s1">About Ushuru Flow</a></li>
+      <li><a href="#s2">We Are Not a Tax Agent</a></li>
+      <li><a href="#s3">Not Affiliated with KRA</a></li>
+      <li><a href="#s4">Eligibility &amp; Account</a></li>
+      <li><a href="#s5">Your Content</a></li>
+      <li><a href="#s6">AI and Automation</a></li>
+      <li><a href="#s7">Acceptable Use</a></li>
+      <li><a href="#s8">Payment</a></li>
+      <li><a href="#s9">Tools &amp; Integrations</a></li>
+      <li><a href="#s10">Availability</a></li>
+      <li><a href="#s11">Data &amp; Privacy</a></li>
+      <li><a href="#s12">Data Retention</a></li>
+      <li><a href="#s13">Intellectual Property</a></li>
+      <li><a href="#s14">Disclaimers</a></li>
+      <li><a href="#s15">Limitation of Liability</a></li>
+      <li><a href="#s16">Indemnification</a></li>
+      <li><a href="#s17">Termination</a></li>
+      <li><a href="#s18">Changes to Terms</a></li>
+      <li><a href="#s19">Governing Law</a></li>
+      <li><a href="#s20">Miscellaneous</a></li>
+      <li><a href="#s21">Contact</a></li>
+    </ol>
+  </aside>
+
+  <article class="content">
+
+    <p>Welcome to Ushuru Flow. These Terms and Conditions (<strong>"Terms"</strong>) govern your access to and use of the Ushuru Flow platform, websites, applications, and services (together, the <strong>"Service"</strong>) operated by Ushuru Flow Ltd (<strong>"Ushuru Flow," "we," "our,"</strong> or <strong>"us"</strong>), a company incorporated in Kenya with registered offices in Nairobi.</p>
+
+    <p>By creating an account, clicking <span class="key">I agree</span>, or using the Service, you confirm that you have read, understood, and agreed to these Terms. <strong>If you do not agree, do not use the Service.</strong></p>
+
+    <h2 id="s1" data-num="01">About Ushuru Flow</h2>
+    <p>Ushuru Flow is a software platform that helps Kenyan businesses prepare tax returns for submission to the Kenya Revenue Authority (<strong>"KRA"</strong>). The Service uses artificial intelligence and automation to extract transactions from invoices, receipts, spreadsheets, and other financial documents you upload, normalize them into a structured ledger, and produce KRA-compatible return files for filing via the iTax system.</p>
+    <p>The Service currently supports:</p>
+    <ul>
+      <li><strong>Value Added Tax (VAT)</strong> — monthly returns for VAT-registered businesses, including VAT3 export.</li>
+      <li><strong>Turnover Tax (TOT)</strong> — monthly returns for businesses with annual gross turnover between KSh 1,000,000 and KSh 50,000,000 who are eligible under the Income Tax Act.</li>
+    </ul>
+    <p>Additional tax types, including Withholding Tax (WHT), Pay As You Earn (PAYE), and Monthly Rental Income (MRI), may be added over time and will be subject to these Terms.</p>
+
+    <h2 id="s2" data-num="02">We Are Not a Tax Agent or Accountant</h2>
+    <p><strong>Ushuru Flow is a software tool, not a tax agent, accountant, advocate, or licensed tax practitioner.</strong> We do not provide tax, legal, accounting, or financial advice, and nothing produced by the Service should be interpreted as such.</p>
+    <p>You are solely responsible for:</p>
+    <ul>
+      <li>The accuracy and completeness of every transaction, figure, and document you upload to the Service.</li>
+      <li>Reviewing every extracted transaction and generated return before filing.</li>
+      <li>Submitting your returns to KRA through the iTax system within the applicable deadlines.</li>
+      <li>Paying any tax, penalty, interest, or other amount due to KRA or any other authority.</li>
+      <li>Determining whether the Service's outputs are appropriate for your specific tax situation.</li>
+    </ul>
+    <p>If your tax affairs are complex, contested, or material, you should consult a licensed Kenyan tax advisor before relying on the Service.</p>
+
+    <h2 id="s3" data-num="03">Not Affiliated with KRA</h2>
+    <p>Ushuru Flow is an independent software product. We are <strong>not</strong> affiliated with, endorsed by, partnered with, or otherwise connected to the Kenya Revenue Authority. The Service may produce files in formats compatible with KRA's iTax system, but compatibility is not endorsement. We are not responsible for any acceptance, rejection, audit, assessment, penalty, or other action taken by KRA in respect of returns prepared using the Service.</p>
+
+    <h2 id="s4" data-num="04">Eligibility and Account Registration</h2>
+    <p>To use the Service, you must:</p>
+    <ul>
+      <li>Be at least 18 years old;</li>
+      <li>Have the legal authority to bind the business on whose behalf you are filing (whether as owner, director, employee, accountant, or authorized agent);</li>
+      <li>Provide accurate, current, and complete information when registering, including the business name, KRA PIN, and contact details;</li>
+      <li>Keep your account information up to date.</li>
+    </ul>
+    <p>You are responsible for safeguarding your login credentials and for all activity that occurs under your account. Notify us immediately at <a href="mailto:matthewphilkan@gmail.com">matthewphilkan@gmail.com</a> if you suspect unauthorized access.</p>
+    <p>We may refuse registration, suspend, or terminate any account at our sole discretion, including where we have a reasonable belief of fraud, misrepresentation, or breach of these Terms.</p>
+
+    <h2 id="s5" data-num="05">Your Content</h2>
+    <p><strong>"Your Content"</strong> means all documents, transactions, business information, tax information, and other data you upload to or generate through the Service.</p>
+    <ul>
+      <li><strong>Ownership.</strong> You retain all rights to Your Content. We do not claim ownership.</li>
+      <li><strong>Licence to us.</strong> You grant Ushuru Flow a limited, non-exclusive, worldwide licence to host, store, process, transmit, and display Your Content <strong>solely</strong> for the purpose of providing the Service to you and complying with legal obligations.</li>
+      <li><strong>Accuracy.</strong> You represent and warrant that Your Content is accurate, that you have the right to share it with us, and that doing so does not violate any law, contract, or third-party right.</li>
+      <li><strong>No training without consent.</strong> We do not use Your Content to train or fine-tune general-purpose AI models. If we ever wish to use anonymized data for product improvement, we will request your separate, opt-in consent.</li>
+    </ul>
+
+    <h2 id="s6" data-num="06">AI and Automation</h2>
+    <p>The Service relies on artificial intelligence to extract data from documents and automation to categorize, validate, and assemble returns.</p>
+    <p>You acknowledge that:</p>
+    <ul>
+      <li>AI extraction is probabilistic and may produce errors, omissions, or misclassifications, particularly with low-quality scans, unusual document layouts, handwritten content, or non-Kenyan documents.</li>
+      <li>You are required to review every extracted transaction in the Service's review interface before generating or exporting a return.</li>
+      <li>The Service surfaces warnings and blockers where it detects possible issues; you are responsible for resolving them or accepting their consequences.</li>
+      <li>We do not guarantee any specific extraction accuracy rate, confidence level, or completeness.</li>
+    </ul>
+
+    <h2 id="s7" data-num="07">Acceptable Use</h2>
+    <p>You agree not to use the Service to:</p>
+    <ul>
+      <li>File false, fraudulent, or misleading returns, or to evade tax owed under Kenyan law;</li>
+      <li>Upload content that infringes any intellectual property, privacy, or other right;</li>
+      <li>Upload malware, viruses, or other malicious code;</li>
+      <li>Attempt to gain unauthorized access to the Service, other accounts, or our infrastructure;</li>
+      <li>Reverse-engineer, scrape, decompile, or extract source code or models from the Service except as permitted by law;</li>
+      <li>Resell, sublicense, or commercially redistribute the Service without our prior written consent (accounting and bookkeeping professionals using the Service on behalf of their clients within a single Ushuru Flow account are exempted and welcomed);</li>
+      <li>Use the Service to violate any applicable law, including the Income Tax Act, the Value Added Tax Act, the Tax Procedures Act, the Data Protection Act 2019, and the Computer Misuse and Cybercrimes Act.</li>
+    </ul>
+    <p>We may suspend or terminate accounts that violate this section without prior notice.</p>
+
+    <h2 id="s8" data-num="08">Subscriptions, Credits, and Payment</h2>
+    <p>The Service may be offered through one or more of the following commercial models:</p>
+    <ul>
+      <li><strong>Free tier</strong> — limited functionality, file size, or filing count.</li>
+      <li><strong>Subscription</strong> — recurring monthly or annual fees billed in advance.</li>
+      <li><strong>Pay-per-filing or credits</strong> — fees charged per return, per document, or via prepaid credits.</li>
+    </ul>
+    <p>Pricing is displayed in Kenyan Shillings (KES) on our pricing page and at point of purchase. Accepted payment methods may include M-Pesa, credit/debit card, and bank transfer. Payment processors may charge their own fees, which are your responsibility.</p>
+    <p>By providing payment information, you authorize us (or our payment processor) to charge the amounts due. Subscriptions auto-renew unless cancelled before the renewal date. You can cancel from your account settings; cancellation takes effect at the end of the current billing period.</p>
+    <p><strong>Refunds.</strong> Fees are non-refundable except where required by law or where we determine, at our discretion, that a refund is warranted (for example, demonstrable Service failure that prevented you from filing on time).</p>
+    <p><strong>Failed payments.</strong> If a charge fails, we may suspend your access until the balance is settled.</p>
+    <p><strong>Tax on fees.</strong> Fees are inclusive of VAT unless stated otherwise.</p>
+
+    <h2 id="s9" data-num="09">Tools and Integrations</h2>
+    <p>The Service may integrate with third-party tools or expose KRA iTax-compatible export files. Where third-party tools require credentials (for example, an iTax filing tool), you authorize us to use the credentials you provide solely to perform the actions you initiate. We do not sell or share those credentials.</p>
+    <p>We are not responsible for the availability, accuracy, or behaviour of third-party systems, including iTax itself.</p>
+
+    <h2 id="s10" data-num="10">Service Availability and Modifications</h2>
+    <p>We aim to provide a reliable Service but do not guarantee continuous, uninterrupted, or error-free operation. We may, with or without notice:</p>
+    <ul>
+      <li>Perform maintenance that temporarily reduces availability;</li>
+      <li>Modify, suspend, or discontinue features;</li>
+      <li>Impose reasonable usage limits to protect the platform.</li>
+    </ul>
+    <p>Where a change is material and adverse to paying users, we will provide reasonable advance notice and a path to cancel or migrate.</p>
+
+    <h2 id="s11" data-num="11">Data, Privacy, and Security</h2>
+    <p>Your use of the Service is also subject to our Privacy Policy, which forms part of these Terms by reference.</p>
+    <p>We process personal data in compliance with the Kenya Data Protection Act 2019. We apply industry-standard security measures, including encryption in transit and at rest, access controls, and audit logging. No system is perfectly secure; you use the Service at your own risk.</p>
+    <p>You retain a copy of and may export Your Content at any time from your account.</p>
+
+    <h2 id="s12" data-num="12">Data Retention After Termination</h2>
+    <p>If your account is cancelled or terminated, we will retain Your Content for a period sufficient to allow you to export it (minimum 30 days), unless you request earlier deletion. Note that Kenyan tax law requires you to retain tax records for at least <strong>five (5) years</strong>; you remain responsible for your own records irrespective of our retention policy. We may retain anonymized, aggregated metadata indefinitely.</p>
+
+    <h2 id="s13" data-num="13">Intellectual Property</h2>
+    <p>The Service, including its software, design, content, branding, and documentation, is owned by Ushuru Flow and protected by Kenyan and international intellectual property laws. We grant you a limited, non-exclusive, non-transferable, revocable licence to use the Service for its intended purpose during the term of your subscription.</p>
+    <p>You may not copy, modify, distribute, sell, lease, or create derivative works from the Service.</p>
+    <p><strong>"Ushuru Flow,"</strong> our logo, and related marks are our trademarks. You may not use them without prior written consent.</p>
+
+    <h2 id="s14" data-num="14">Disclaimers</h2>
+    <p>To the maximum extent permitted by law, the Service is provided <strong>"as is" and "as available"</strong> without warranties of any kind, whether express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, completeness, or uninterrupted availability.</p>
+    <p>We do not warrant that:</p>
+    <ul>
+      <li>Any return prepared using the Service will be accepted by KRA;</li>
+      <li>Any extraction, classification, or calculation produced by the Service is correct;</li>
+      <li>The Service will detect every error, duplicate, or anomaly in Your Content;</li>
+      <li>Use of the Service will result in any specific tax outcome, refund, or saving.</li>
+    </ul>
+
+    <h2 id="s15" data-num="15">Limitation of Liability</h2>
+    <p>To the maximum extent permitted by law:</p>
+    <ul>
+      <li>In no event will Ushuru Flow, its directors, employees, agents, or service providers be liable for any indirect, incidental, consequential, special, exemplary, or punitive damages, including loss of profits, loss of revenue, loss of data, business interruption, or loss of goodwill, arising out of or in connection with your use of the Service.</li>
+      <li>We will not be liable for any KRA penalty, interest, assessment, audit cost, or other charge imposed on you, except where directly caused by our gross negligence or wilful misconduct.</li>
+      <li>Our total aggregate liability arising out of or in connection with these Terms or the Service, regardless of the legal theory, will not exceed the greater of (a) the fees you paid to us in the <strong>twelve (12) months</strong> preceding the event giving rise to the claim, or (b) KSh 10,000.</li>
+    </ul>
+    <p>These limitations apply even if a remedy fails of its essential purpose. Some jurisdictions do not allow exclusion of certain warranties or limitations on liability; where so, the above limitations apply to the maximum extent permitted.</p>
+
+    <h2 id="s16" data-num="16">Indemnification</h2>
+    <p>You agree to defend, indemnify, and hold harmless Ushuru Flow and its officers, directors, employees, and agents from and against any claim, demand, loss, damage, liability, or expense (including reasonable legal fees) arising out of or related to:</p>
+    <ul>
+      <li>Your use or misuse of the Service;</li>
+      <li>Your breach of these Terms;</li>
+      <li>Your violation of any law or third-party right;</li>
+      <li>Inaccuracies in Your Content; or</li>
+      <li>Any return submitted to KRA based on Your Content.</li>
+    </ul>
+
+    <h2 id="s17" data-num="17">Termination</h2>
+    <p>You may terminate your account at any time from your account settings or by contacting <a href="mailto:matthewphilkan@gmail.com">matthewphilkan@gmail.com</a>.</p>
+    <p>We may suspend or terminate your access, with or without notice, if:</p>
+    <ul>
+      <li>You breach these Terms;</li>
+      <li>We are required to do so by law;</li>
+      <li>We have a reasonable belief of fraud, misuse, or risk to the platform; or</li>
+      <li>We discontinue the Service.</li>
+    </ul>
+    <p>Upon termination, your right to use the Service ends. Sections that by their nature should survive termination (including ownership, disclaimers, limitations of liability, indemnification, and governing law) will survive.</p>
+
+    <h2 id="s18" data-num="18">Changes to These Terms</h2>
+    <p>We may update these Terms from time to time. The "Last updated" date at the top reflects the most recent revision. Where changes are material, we will give reasonable notice — by email, in-product banner, or another visible channel — at least fourteen (14) days before they take effect. Continued use of the Service after changes take effect constitutes acceptance.</p>
+    <p>If you do not agree to a change, your remedy is to stop using the Service before the change takes effect.</p>
+
+    <h2 id="s19" data-num="19">Governing Law and Disputes</h2>
+    <p>These Terms are governed by the laws of the Republic of Kenya, without regard to conflict-of-law principles.</p>
+    <p>Any dispute arising from or relating to these Terms or the Service shall first be addressed by good-faith negotiation between the parties for a period of at least thirty (30) days. If unresolved, the dispute shall be referred to arbitration in Nairobi under the Arbitration Act of Kenya, by a single arbitrator appointed by agreement or, failing that, by the Chartered Institute of Arbitrators (Kenya Branch). Either party may seek injunctive or equitable relief from a court of competent jurisdiction in Kenya without first proceeding to arbitration.</p>
+
+    <h2 id="s20" data-num="20">Miscellaneous</h2>
+    <ul>
+      <li><strong>Entire agreement.</strong> These Terms, together with the Privacy Policy and any other documents incorporated by reference, are the entire agreement between you and us regarding the Service.</li>
+      <li><strong>Severability.</strong> If any provision is held unenforceable, the remaining provisions remain in full force.</li>
+      <li><strong>Waiver.</strong> Our failure to enforce any provision is not a waiver of the right to enforce it later.</li>
+      <li><strong>Assignment.</strong> You may not assign these Terms without our consent. We may assign these Terms in connection with a merger, acquisition, or sale of assets.</li>
+      <li><strong>Force majeure.</strong> Neither party is liable for failures caused by events beyond reasonable control (including internet outages, power failures, natural disasters, government action, and acts of war).</li>
+      <li><strong>Notices.</strong> We may send notices to the email address on your account. You may send notices to us by email or post.</li>
+    </ul>
+
+    <h2 id="s21" data-num="21">Contact</h2>
+    <p>Questions about these Terms, the Service, or your account:</p>
+    <div class="contact-box">
+      <div class="item"><b>Email</b><a href="mailto:matthewphilkan@gmail.com">matthewphilkan@gmail.com</a></div>
+      <div class="item"><b>Phone</b><a href="tel:+254747599325">+254 747 599 325</a></div>
+      <div class="item"><b>Address</b><span>Nairobi, Kenya</span></div>
+    </div>
+
+    <p style="margin-top: 40px;"><em>By signing up for or using Ushuru Flow, you acknowledge that you have read these Terms and agree to be bound by them.</em></p>
+  </article>
+</div>
+
+<section class="bottom">
+  <div class="wrap bottom-inner">
+    <span>Ready to use Ushuru Flow when it launches?</span>
+    <div class="cta-row">
+      <a class="btn-join" href="waitlist.html">Join Waitlist →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 Ushuru Flow Ltd · Made in Nairobi.</span>
+    <span><a href="index.html">Home</a> · <a href="waitlist.html">Waitlist</a> · <a href="mailto:matthewphilkan@gmail.com">matthewphilkan@gmail.com</a></span>
+  </div>
+</footer>
+
+<script>
+  // Theme persistence
+  const saved = localStorage.getItem('ushuru-theme');
+  if (saved === 'dark' || saved === 'light') {
+    document.documentElement.setAttribute('data-theme', saved);
+  }
+  document.getElementById('theme-btn').addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('ushuru-theme', next);
+  });
+
+  // TOC scroll-spy
+  const tocLinks = document.querySelectorAll('.toc a');
+  const sections = Array.from(document.querySelectorAll('.content h2[id]'));
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        tocLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
